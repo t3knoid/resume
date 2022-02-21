@@ -505,6 +505,36 @@ section {
   background: #fff;
   border: 2px solid #0563bb;
 }
+.resume .resume-item table {
+  border-collapse: collapse;
+  width: 100% ;
+  padding: 0%;
+  border-spacing: 0in;
+  border: 0px;
+}
+.resume .resume-company {
+  line-height: 18px;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-family: "Poppins", sans-serif;
+  color: #0563bb;
+  margin-bottom: 0px;
+}
+.resume .resume-company-description {
+  vertical-align: text-top;
+  width:80%;
+}
+.resume .resume-dateworked {
+  text-align: right;
+  height: 0.2in; 
+}
+.resume .resume-responsibilities {
+  column-span: 2;
+}
+.resume .resume-position {
+  padding-top:  .1in;
+}
 
 /*--------------------------------------------------------------
 # Portfolio
