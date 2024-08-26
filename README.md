@@ -1,5 +1,5 @@
 # Resume
-This is a very simple resume format using pure HTML. You can view [my resume](https://t3knoid.github.io/resume/) using this technique in Github Pages. 
+This is a very simple resume format using HTML and [Bootstrap](https://getbootstrap.com/). You can view [my resume](https://t3knoid.github.io/resume/) using this technique in Github Pages. 
 
 ## Formatting
 
