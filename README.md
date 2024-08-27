@@ -12,7 +12,7 @@ Each work experience uses the following template.
 			<h3><a href="" target="_blank"></a><!-- Company Name --></h3>
 		</td>
 		<td style="text-align: right;">			
-			<!-- Years worked in YYYY-YYYY format --><br/>
+			<!-- Years worked in MMM YYYY-MMM YYYY format --><br/>
 			<!-- City and State in Anytown, US format -->		
 		</td>
 	</tr>
