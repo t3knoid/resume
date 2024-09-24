@@ -1,41 +1,39 @@
 # Resume
-This is a very simple resume format using HTML and [Bootstrap](https://getbootstrap.com/). You can view [my resume](https://t3knoid.github.io/resume/) using this technique in Github Pages. 
+This is a very simple resume format using HTML and CSS. You can view [my resume](https://t3knoid.github.io/resume/) using this technique in Github Pages. 
 
 ## Formatting
 
-Each work experience uses the following template.
+Each work experience is encapsulated in using the following div item.
 
 ```
-<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-left: -0.5pt; width: 720px;">
-	<tr">
-		<td">
-			<h3><a href="" target="_blank"></a><!-- Company Name --></h3>
-		</td>
-		<td style="text-align: right;">			
-			<!-- Years worked in MMM YYYY-MMM YYYY format --><br/>
-			<!-- City and State in Anytown, US format -->		
-		</td>
-	</tr>
-	<tr >
-		<td style="vertical-align: text-top;" colspan="2">
-			<!-- Company description -->
-		</td>
-	</tr>
-	<tr>
-		<td style="padding-top: .1in;">			
-			<i><b><!-- Job title --></b></i>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-			<ul>
-				<!-- List of responsibilities -->
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-		</td>
-	</tr>
-</table>
-
+<!-- Company name -->
+<div class="resume-item">
+	<table>
+		<tr>
+			<td>
+				<div class="resume-position">
+					Job position
+				</div>
+				<div class="resume-company">
+					<a href="https://www.companyurl.com/" target="_blank">Some Company Name</a> | Anytown, USA
+				</div>
+				<div class="resume-company-description">
+					Short description of the company.
+				</div> 
+			</td>
+			<td class="resume-dateworked">
+				MMM YYYY-MMM YYYY<br/>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<ul>
+					<li>Responsibility 1.</li>
+					<li>Responsibility 2.</li>
+					<li>Responsibility 3.</li>
+				</ul>
+			</td>
+		</tr>
+	</table>
+</div>
 ```
