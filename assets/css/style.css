@@ -310,13 +310,13 @@ h1, h2, h3, h4, h5, h6 {
 # Sections General
 --------------------------------------------------------------*/
 section {
-  padding: 10px 0;
-  overflow: hidden;
+  padding: 0px 0;
+
 }
 
 .section-title {
   text-align: center;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
 }
 .section-title h2 {
   font-size: 32px;
@@ -456,14 +456,22 @@ section {
 # Resume
 --------------------------------------------------------------*/
 .resume .resume-title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   margin-top: 10px;
   margin-bottom: 10px;
   color: #45505b;
 }
+.resume .resume-title table {
+  border-collapse: collapse;
+  width: 100% ;
+  padding: 0%;
+  border-spacing: 0in;
+  border: 0px;
+}
+
 .resume .resume-item {
-  padding: 0 0 0px 20px;
+  padding: 0 0 0px 14px;
   margin-top: -2px;
   border-left: 2px solid #0563bb;
   position: relative;
@@ -506,33 +514,47 @@ section {
   border: 2px solid #0563bb;
 }
 .resume .resume-item table {
+  font-family: "Poppins", sans-serif;
+  font-weight: normal;
+  font-size: 12px;
   border-collapse: collapse;
   width: 100% ;
   padding: 0%;
   border-spacing: 0in;
   border: 0px;
+  font-weight: 400;
+}
+.resume .resume-position {
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  vertical-align: text-top;
+  margin-bottom: 0px;
+  margin-top: -6px;
 }
 .resume .resume-company {
-  line-height: 18px;
-  font-size: 18px;
-  font-weight: 600;
-  text-transform: uppercase;
   font-family: "Poppins", sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  text-transform: uppercase;
   color: #0563bb;
   margin-bottom: 0px;
-  margin-top: 0;
+  margin-top: 0px;
 }
 .resume .resume-company-description {
-  vertical-align: text-top;
-  width:80%;
+  font-family: "Poppins", sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  font-style: italic;
+  width: 80% ;
 }
 .resume .resume-dateworked {
-  text-align: right;
-  height: 0.2in; 
-}
-
-.resume .resume-position {
-  padding-top:  .1in;
+  font-family: "Poppins", sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  vertical-align: text-top;
+  margin-bottom: 0px;
+  margin-top: -6px;
 }
 
 /*--------------------------------------------------------------
@@ -906,8 +928,50 @@ section {
 # Contact
 --------------------------------------------------------------*/
 .contact .info {
-  width: 100%;
+  font-family: "Poppins", sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  vertical-align: top;
   background: #fff;
+}
+.contact .info table {
+  font-family: "Poppins", sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  border-collapse: collapse;
+  width: 100% ;
+  padding: 0%;
+  border-spacing: 0in;
+  border: 0px;
+}
+
+.contact .name {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  text-align: left;
+  vertical-align: top;
+  line-height: 18px;
+  color: #0563bb;
+  margin-bottom: 0px;
+}
+.contact .title {
+  font-family: "Poppins", sans-serif;
+  font-weight: normal;
+  font-size: 18px;
+  vertical-align: top;
+  text-align: left;
+  font-size: 14px;
+  margin-bottom: 0px;
+}
+.contact .summary {
+  font-family: "Poppins", sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  vertical-align: top;
+  text-align: left;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .contact .info i {
   font-size: 20px;
@@ -923,10 +987,10 @@ section {
   transition: all 0.3s ease-in-out;
 }
 .contact .info h4 {
-  padding: 0 0 0 60px;
-  font-size: 22px;
+  padding: 0 0 0 0;
+  font-size: 18px;
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-bottom: 0;
   color: #45505b;
 }
 .contact .info p {
@@ -935,8 +999,9 @@ section {
   font-size: 14px;
   color: #728394;
 }
-.contact .info .email, .contact .info .phone {
-  margin-top: 40px;
+.contact .info .email, .contact .info .phone, .contact .info .url, .contact .info .address {
+  text-align: right;
+  font-size: 14px;
 }
 .contact .info .email:hover i, .contact .info .address:hover i, .contact .info .phone:hover i {
   background: #0563bb;
