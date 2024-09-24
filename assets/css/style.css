@@ -169,7 +169,7 @@ section {
   font-style: italic;
   margin-bottom: 0px;
   margin-top: 10px;
-  width: 80% ;
+  width: 80%;
 }
 .resume .resume-dateworked {
   font-family: "Poppins", sans-serif;
@@ -177,7 +177,8 @@ section {
   font-size: 12px;
   vertical-align: text-top;
   margin-bottom: 0px;
-  margin-top: -6px;
+  margin-top: 0px;
+  text-align: right;
 }
 
 .resume .resume-reference {
