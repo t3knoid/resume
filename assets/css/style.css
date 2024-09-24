@@ -137,7 +137,7 @@ section {
 .resume .resume-item table {
   font-family: "Poppins", sans-serif;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 14px;
   border-collapse: collapse;
   width: 100% ;
   padding: 0%;
@@ -148,7 +148,7 @@ section {
 .resume .resume-position {
   font-family: "Poppins", sans-serif;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   text-transform: uppercase;
   vertical-align: text-top;
   margin-bottom: 0px;
@@ -157,7 +157,7 @@ section {
 .resume .resume-company {
   font-family: "Poppins", sans-serif;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 14px;
   color: #0563bb;
   margin-bottom: 0px;
   margin-top: 0px;
@@ -165,7 +165,7 @@ section {
 .resume .resume-company-description {
   font-family: "Poppins", sans-serif;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 14px;
   font-style: italic;
   margin-bottom: 0px;
   margin-top: 10px;
@@ -174,7 +174,7 @@ section {
 .resume .resume-dateworked {
   font-family: "Poppins", sans-serif;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 14px;
   vertical-align: text-top;
   margin-bottom: 0px;
   margin-top: 0px;
@@ -184,13 +184,13 @@ section {
 .resume .resume-reference {
   font-family: "Poppins", sans-serif;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 14px;
   padding: 0px 0px 0px 5px;
 }
 .resume .resume-education {
   font-family: "Poppins", sans-serif;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 14px;
   padding: 0px 0px 0px 5px;
 }
 
@@ -228,16 +228,15 @@ section {
 .contact .title {
   font-family: "Poppins", sans-serif;
   font-weight: normal;
-  font-size: 18px;
+  font-size: 14px;
   vertical-align: top;
   text-align: left;
-  font-size: 14px;
   margin-bottom: 0px;
 }
 .contact .summary {
   font-family: "Poppins", sans-serif;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 14px;
   vertical-align: top;
   text-align: left;
   margin-top: 10px;
