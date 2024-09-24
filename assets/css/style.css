@@ -9,7 +9,10 @@
 # General
 --------------------------------------------------------------*/
 body {
-  margin: 40px 40px 30px 40px;
+  margin-top: 0.5in;
+  margin-bottom: 0.5in;
+  margin-left: .5in;
+  margin-right: .5in;
   font-family: "Open Sans", sans-serif;
   color: #272829;
 }
@@ -29,11 +32,31 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*--------------------------------------------------------------
+# Page
+--------------------------------------------------------------*/
+@page {
+  size: letter;
+  margin: 0
+}
+@media print {
+  @page {
+    size: 8.5in 11in;
+    margin-top: 0.5in;
+    margin-bottom: 0.5in;
+    margin-left: 1in;
+    margin-right: .5in;
+  }
+}
+
+/*--------------------------------------------------------------
 # Sections General
 --------------------------------------------------------------*/
 section {
-  padding: 10px 0;
-  overflow: hidden;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    page-break-after: always;
 }
 
 .section-title {
