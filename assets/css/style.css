@@ -1,10 +1,3 @@
-/**
-* Template Name: MyResume - v4.7.0
-* Template URL: https://bootstrapmade.com/free-html-bootstrap-template-my-resume/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
@@ -13,7 +6,7 @@ body {
   margin-bottom: 0.5in;
   margin-left: .5in;
   margin-right: .5in;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Verdana", sans-serif;
   color: #272829;
 }
 
@@ -28,7 +21,7 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Raleway", sans-serif;
+  font-family: "Verdana", sans-serif;
 }
 
 /*--------------------------------------------------------------
@@ -126,7 +119,7 @@ section {
   font-size: 18px;
   font-weight: 600;
   text-transform: uppercase;
-  font-family: "Poppins", sans-serif;
+  font-family: "Verdana", sans-serif;
   color: #0563bb;
   margin-bottom: 10px;
 }
@@ -158,7 +151,7 @@ section {
   border: 2px solid #0563bb;
 } */
 .resume .resume-item table {
-  font-family: "Poppins", sans-serif;
+  font-family: "Verdana", sans-serif;
   font-weight: normal;
   font-size: 14px;
   border-collapse: collapse;
@@ -169,7 +162,7 @@ section {
   font-weight: 400;
 }
 .resume .resume-position {
-  font-family: "Poppins", sans-serif;
+  font-family: "Verdana", sans-serif;
   font-weight: bold;
   font-size: 14px;
   text-transform: uppercase;
@@ -178,7 +171,7 @@ section {
   margin-top: 0px;
 }
 .resume .resume-company {
-  font-family: "Poppins", sans-serif;
+  font-family: "Verdana", sans-serif;
   font-weight: normal;
   font-size: 14px;
   color: #0563bb;
@@ -186,7 +179,7 @@ section {
   margin-top: 0px;
 }
 .resume .resume-company-description {
-  font-family: "Poppins", sans-serif;
+  font-family: "Verdana", sans-serif;
   font-weight: normal;
   font-size: 14px;
   font-style: italic;
@@ -195,7 +188,7 @@ section {
   width: 80%;
 }
 .resume .resume-dateworked {
-  font-family: "Poppins", sans-serif;
+  font-family: "Verdana", sans-serif;
   font-weight: normal;
   font-size: 14px;
   vertical-align: text-top;
@@ -205,13 +198,13 @@ section {
 }
 
 .resume .resume-reference {
-  font-family: "Poppins", sans-serif;
+  font-family: "Verdana", sans-serif;
   font-weight: normal;
   font-size: 14px;
   padding: 0px 0px 0px 5px;
 }
 .resume .resume-education {
-  font-family: "Poppins", sans-serif;
+  font-family: "Verdana", sans-serif;
   font-weight: normal;
   font-size: 14px;
   padding: 0px 0px 0px 5px;
@@ -221,14 +214,14 @@ section {
 # Contact
 --------------------------------------------------------------*/
 .contact .info {
-  font-family: "Poppins", sans-serif;
+  font-family: "Verdana", sans-serif;
   font-weight: normal;
   font-size: 12px;
   vertical-align: top;
   background: #fff;
 }
 .contact .info table {
-  font-family: "Poppins", sans-serif;
+  font-family: "Verdana", sans-serif;
   font-weight: normal;
   font-size: 12px;
   border-collapse: collapse;
@@ -239,7 +232,7 @@ section {
 }
 
 .contact .name {
-  font-family: "Poppins", sans-serif;
+  font-family: "Verdana", sans-serif;
   font-weight: 600;
   font-size: 18px;
   text-align: left;
@@ -249,7 +242,7 @@ section {
   margin-bottom: 0px;
 }
 .contact .title {
-  font-family: "Poppins", sans-serif;
+  font-family: "Verdana", sans-serif;
   font-weight: normal;
   font-size: 14px;
   vertical-align: top;
@@ -257,7 +250,7 @@ section {
   margin-bottom: 0px;
 }
 .contact .summary {
-  font-family: "Poppins", sans-serif;
+  font-family: "Verdana", sans-serif;
   font-weight: normal;
   font-size: 14px;
   vertical-align: top;
@@ -396,7 +389,7 @@ section {
   font-size: 36px;
   font-weight: 700;
   position: relative;
-  font-family: "Poppins", sans-serif;
+  font-family: "Verdana", sans-serif;
   padding: 0;
   margin: 0 0 15px 0;
 }
