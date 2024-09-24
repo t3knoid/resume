@@ -79,7 +79,7 @@ section {
 .resume .resume-title {
   font-size: 16px;
   font-weight: 700;
-  margin-top: 10px;
+  margin-top: 0px;
   margin-bottom: 10px;
   color: #45505b;
 }
@@ -241,7 +241,7 @@ section {
   vertical-align: top;
   text-align: left;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 .contact .info i {
   font-size: 20px;
