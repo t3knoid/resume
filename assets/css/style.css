@@ -96,7 +96,8 @@ section {
   font-size: 16px;
   font-weight: 700;
   margin-top: 0px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  margin-top: 10px;
   color: #45505b;
 }
 .resume .resume-title table {
@@ -108,7 +109,7 @@ section {
 }
 
 .resume .resume-item {
-  padding: 0px 0px 0px 10px;
+  padding: 0px 0px 0px 0px;
   margin-top: 0px;
   margin-left: 5px;
   /* border-left: 2px solid #0563bb; */
