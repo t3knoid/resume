@@ -2,8 +2,8 @@
 # General
 --------------------------------------------------------------*/
 body {
-  margin-top: 0.5in;
-  margin-bottom: 0.5in;
+  margin-top: .3in;
+  margin-bottom: 0in;
   margin-left: .5in;
   margin-right: .5in;
   font-family: "Verdana", sans-serif;
@@ -27,6 +27,7 @@ h1, h2, h3, h4, h5, h6 {
 .highlight {
   font-weight: bold;
   display:inline;
+  font-size: 12px;
 }
 
 .contact .info .email, .contact .info .phone {
@@ -44,7 +45,7 @@ h1, h2, h3, h4, h5, h6 {
     size: 8.5in 11in;
     margin-top: 0.5in;
     margin-bottom: 0.5in;
-    margin-left: .5in;
+    margin-left: 0.3in;
     margin-right: .5in;
   }
   .download {
@@ -108,11 +109,11 @@ section {
 # Resume
 --------------------------------------------------------------*/
 .resume .resume-title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   margin-top: 0px;
   margin-bottom: 5px;
-  margin-top: 10px;
+  margin-top: 0px;
   color: #45505b;
 }
 .resume .resume-title table {
@@ -121,6 +122,8 @@ section {
   padding: 0%;
   border-spacing: 0in;
   border: 0px;
+  page-break-inside:auto; 
+  page-break-after:avoid;
 }
 
 .resume .resume-item {
@@ -133,7 +136,8 @@ section {
 
 .resume h3 {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: bold;
+  font-family: "Verdana", sans-serif;
   margin-top: 0px;
   margin-bottom: 5px;
   margin-top: 10px;
@@ -141,16 +145,16 @@ section {
 }
 
 .resume .resume-item h4 {
-  line-height: 18px;
-  font-size: 18px;
-  font-weight: 600;
+  line-height: 14px;
+  font-size: 14px;
+  font-weight: bold;
   text-transform: uppercase;
   font-family: "Verdana", sans-serif;
   color: #0563bb;
   margin-bottom: 10px;
 }
 .resume .resume-item h5 {
-  font-size: 16px;
+  font-size: 12px;
   background: #f7f8f9;
   padding: 5px 15px;
   display: inline-block;
@@ -158,11 +162,12 @@ section {
   margin-bottom: 10px;
 }
 .resume .resume-item ul {
-  padding-left: 20px;
+  padding-left: 15px;
 }
 .resume .resume-item ul li {
-  padding-bottom: 5px;
+  padding-bottom: 2px;
   padding-left: 0px;
+  font-size: 12px;
 }
 
 .resume .resume-item:last-child {
@@ -182,18 +187,24 @@ section {
 .resume .resume-item table {
   font-family: "Verdana", sans-serif;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 12px;
   border-collapse: collapse;
   width: 100% ;
   padding: 0%;
   border-spacing: 0in;
   border: 0px;
   font-weight: 400;
+  page-break-inside:avoid; 
+  page-break-after:auto;
+}
+.resume .resume-item tr {
+  page-break-inside:avoid;
+  page-break-after:auto;
 }
 .resume .resume-position {
   font-family: "Verdana", sans-serif;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 12px;
   text-transform: uppercase;
   vertical-align: text-top;
   margin-bottom: 0px;
@@ -202,23 +213,23 @@ section {
 .resume .resume-company {
   font-family: "Verdana", sans-serif;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 12px;
   color: #0563bb;
   margin-bottom: 0px;
-  margin-top: 0px;
+  margin-top: 5px;
 }
 .resume .resume-company-description {
   font-family: "Verdana", sans-serif;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 12px;
   font-style: italic;
   margin-bottom: 0px;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 .resume .resume-date-worked {
   font-family: "Verdana", sans-serif;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 12px;
   vertical-align: text-top;
   margin-bottom: 0px;
   margin-top: 0px;
@@ -229,16 +240,22 @@ section {
 .resume .resume-reference {
   font-family: "Verdana", sans-serif;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 12px;
   padding: 0px 0px 0px 5px;
 }
 .resume .resume-education {
   font-family: "Verdana", sans-serif;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 12px;
   padding: 0px 0px 0px 5px;
 }
 
+.resume .resume-core-skills {
+  font-family: "Verdana", sans-serif;
+  font-weight: normal;
+  font-size: 10px;
+  padding: 0px 0px 0px 5px;
+}
 /*--------------------------------------------------------------
 # Contact
 --------------------------------------------------------------*/
@@ -263,17 +280,17 @@ section {
 .contact .name {
   font-family: "Verdana", sans-serif;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
   text-align: left;
   vertical-align: top;
-  line-height: 18px;
+  line-height: 16px;
   color: #0563bb;
   margin-bottom: 0px;
 }
 .contact .title {
   font-family: "Verdana", sans-serif;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 12px;
   vertical-align: top;
   text-align: left;
   margin-bottom: 0px;
@@ -281,7 +298,7 @@ section {
 .contact .summary {
   font-family: "Verdana", sans-serif;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 12px;
   vertical-align: top;
   text-align: left;
   margin-top: 10px;
@@ -304,16 +321,15 @@ section {
 .contact .info h2 {
   font-family: "Verdana", sans-serif;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
   text-align: left;
-  vertical-align: top;
-  line-height: 18px;
+  vertical-align: baseline;
   color: #0563bb;
-  margin-bottom: 0px;
+  margin: 0;
 }
 
 .contact .info h3 {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   margin-top: 0px;
   margin-bottom: 5px;
@@ -323,7 +339,7 @@ section {
 
 .contact .info h4 {
   padding: 0 0 0 0;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   margin-bottom: 0;
   color: #45505b;
@@ -331,12 +347,12 @@ section {
 .contact .info p {
   padding: 0 0 0 60px;
   margin-bottom: 0;
-  font-size: 14px;
+  font-size: 12px;
   color: #728394;
 }
 .contact .info .email, .contact .info .phone, .contact .info .url, .contact .info .address {
   text-align: right;
-  font-size: 14px;
+  font-size: 12px;
 }
 .contact .info .email:hover i, .contact .info .address:hover i {
   background: #0563bb;
@@ -389,7 +405,7 @@ section {
 .contact .php-email-form input, .contact .php-email-form textarea {
   border-radius: 4px;
   box-shadow: none;
-  font-size: 14px;
+  font-size: 12px;
 }
 .contact .php-email-form input {
   height: 44px;
