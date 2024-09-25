@@ -29,7 +29,7 @@ h1, h2, h3, h4, h5, h6 {
   display:inline;
 }
 
-#print-only {
+.contact .info .email, .contact .info .phone {
   display: none;
 }
 /*--------------------------------------------------------------
@@ -51,9 +51,10 @@ h1, h2, h3, h4, h5, h6 {
     display:none;
   }
 
-  #print-only {
+  .contact .info .email, .contact .info .phone {
     display: block;
   }
+
 }
 
 /*--------------------------------------------------------------
@@ -128,6 +129,15 @@ section {
   margin-left: 5px;
   /* border-left: 2px solid #0563bb; */
   position: relative;
+}
+
+.resume h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  color: #45505b;
 }
 
 .resume .resume-item h4 {
@@ -290,6 +300,27 @@ section {
   border-radius: 50px;
   transition: all 0.3s ease-in-out;
 }
+
+.contact .info h2 {
+  font-family: "Verdana", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  text-align: left;
+  vertical-align: top;
+  line-height: 18px;
+  color: #0563bb;
+  margin-bottom: 0px;
+}
+
+.contact .info h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  color: #45505b;
+}
+
 .contact .info h4 {
   padding: 0 0 0 0;
   font-size: 18px;
