@@ -44,6 +44,9 @@ h1, h2, h3, h4, h5, h6 {
     margin-left: .5in;
     margin-right: .5in;
   }
+  .download {
+    display:none;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -387,52 +390,13 @@ section {
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
-#footer {
-  background: #f7f8f9;
-  color: #45505b;
-  font-size: 14px;
-  text-align: center;
-  padding: 30px 0;
+.footer .download {
+  font-size: 8px;
+  text-align: right;
 }
-#footer h3 {
-  font-size: 36px;
-  font-weight: 700;
-  position: relative;
-  font-family: "Verdana", sans-serif;
-  padding: 0;
-  margin: 0 0 15px 0;
-}
-#footer p {
-  font-size: 15;
-  font-style: italic;
-  padding: 0;
-  margin: 0 0 40px 0;
-}
-#footer .social-links {
-  margin: 0 0 40px 0;
-}
-#footer .social-links a {
-  font-size: 18px;
-  display: inline-block;
-  background: #0563bb;
-  color: #fff;
-  line-height: 1;
-  padding: 8px 0;
-  margin-right: 4px;
-  border-radius: 50%;
-  text-align: center;
-  width: 36px;
-  height: 36px;
-  transition: 0.3s;
-}
-#footer .social-links a:hover {
-  background: #0678e3;
-  color: #fff;
-  text-decoration: none;
-}
-#footer .copyright {
+.footer .copyright {
   margin: 0 0 5px 0;
 }
-#footer .credits {
+.footer .credits {
   font-size: 13px;
 }
