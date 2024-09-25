@@ -194,7 +194,7 @@ section {
   font-style: italic;
   margin-bottom: 0px;
   margin-top: 10px;
-  width: 80%;
+  /* width: 80%; */
 }
 .resume .resume-date-worked {
   font-family: "Verdana", sans-serif;
