@@ -24,6 +24,11 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Verdana", sans-serif;
 }
 
+.highlight {
+  font-weight: bold;
+  display:inline;
+}
+
 /*--------------------------------------------------------------
 # Page
 --------------------------------------------------------------*/
@@ -115,6 +120,7 @@ section {
   /* border-left: 2px solid #0563bb; */
   position: relative;
 }
+
 .resume .resume-item h4 {
   line-height: 18px;
   font-size: 18px;
@@ -137,10 +143,13 @@ section {
 }
 .resume .resume-item ul li {
   padding-bottom: 5px;
+  padding-left: 0px;
 }
+
 .resume .resume-item:last-child {
   padding-bottom: 0;
 }
+
 /* .resume .resume-item::before {
   content: "";
   position: absolute;
