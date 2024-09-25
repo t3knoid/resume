@@ -44,9 +44,9 @@ h1, h2, h3, h4, h5, h6 {
   @page {
     size: 8.5in 11in;
     margin-top: .75in;
-    margin-bottom: .75in;
-    margin-left: .75in;
-    margin-right: .75in;
+    margin-bottom: 1in;
+    margin-left: 1in;
+    margin-right: 1in;
   }
   .download {
     display:none;
