@@ -47,6 +47,10 @@ h1, h2, h3, h4, h5, h6 {
   .download {
     display:none;
   }
+
+  .contact .info .phone {
+    display: block;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -296,11 +300,14 @@ section {
   font-size: 14px;
   color: #728394;
 }
-.contact .info .email, .contact .info .phone, .contact .info .url, .contact .info .address {
+.contact .info .phone {
+  display: none;
+}
+.contact .info .email, .contact .info .url, .contact .info .address {
   text-align: right;
   font-size: 14px;
 }
-.contact .info .email:hover i, .contact .info .address:hover i, .contact .info .phone:hover i {
+.contact .info .email:hover i, .contact .info .address:hover i {
   background: #0563bb;
   color: #fff;
 }
