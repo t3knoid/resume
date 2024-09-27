@@ -32,32 +32,6 @@ h1, h2, h3, h4, h5, h6 {
 .contact .info .email, .contact .info .phone {
   display: none;
 }
-/*--------------------------------------------------------------
-# Page
---------------------------------------------------------------*/
-@page {
-  size: letter;
-  margin: 0
-}
-@media print {
-  @page {
-    size: 8.5in 11in;
-    margin-top: .75in;
-    margin-bottom: 1in;
-    margin-left: 1in;
-    margin-right: 1in;
-  }
-  .download {
-    display:none;
-  }
-  .contact .info .email, .contact .info .phone {
-    display: block;
-  }
-  #core-skills {
-    page-break-inside:avoid; 
-    page-break-after:auto;
-  }
-}
 
 /*--------------------------------------------------------------
 # Sections General
