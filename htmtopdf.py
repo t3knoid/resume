@@ -34,7 +34,7 @@ except Exception as e:
 
 try:
     # Convert HTML to PDF
-    HTML('https://t3knoid.github.io/resume/index.html').write_pdf(resume_pdf_file) 
+    HTML('index.html').write_pdf(resume_pdf_file) 
 
 except Exception as e:
     print(f"An error occurred trying to convert the resume to PDF: {e}")

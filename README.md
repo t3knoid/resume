@@ -37,3 +37,18 @@ Each work experience is encapsulated in using the following div item.
 	</table>
 </div>
 ```
+
+## Azure Blob
+
+The HTML contains a static link to a PDF format of the resume. The download link is located at the footer of the document. It links to a URL in an Azure blob storage containing the PDF.
+
+## Automated Deploy
+
+In order to automate the changes and upload the PDF to Azure, I've written this [Python script](https://github.com/t3knoid/resume/blob/main/htmtopdf.py) that modifies the HTML with the updated URL to the PDF file in Azure, generate the PDF, and uploads the PDF to Azure. 
+
+Run the script using the following commands:
+
+```bash
+pip install requirements.txt
+python3 htmtopdf.py
+```
