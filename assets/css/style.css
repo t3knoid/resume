@@ -429,3 +429,7 @@ section {
 .footer .credits {
   font-size: 13px;
 }
+.footer .last-updated {
+  font-size: 8px;
+  text-align: left;
+}
