@@ -1,6 +1,6 @@
 import os
 import datetime
-from azure.storage.blob import BlobServiceClient
+from azure.storage.blob import BlobServiceClient, ContentSettings
 from weasyprint import HTML
 from bs4 import BeautifulSoup
 
@@ -40,14 +40,14 @@ except Exception as e:
 
 try:
     # Convert HTML to PDF
-    HTML('index.html').write_pdf(resume_pdf_file) 
+    HTML(html_file).write_pdf(resume_pdf_file) 
 
 except Exception as e:
     print(f"An error occurred trying to convert the resume to PDF: {e}")
 
-# Replace with your Azure Storage account details
-connection_string = "" #  Obtain from Azure portal under the storage account's "Access keys" section.
-container_name = "$web"
+
+connection_string = os.environ["AZURE_STORAGE_CONNECTION_STRING"]
+container_name = os.environ["AZURE_STORAGE_CONTAINER"]
 
 try:
     # Create a BlobServiceClient
@@ -58,7 +58,21 @@ try:
 
     # Upload the file
     with open(resume_pdf_file, "rb") as data:
-        container_client.upload_blob(name=resume_pdf_file, data=data, overwrite=True)
+        container_client.upload_blob(
+            name=resume_pdf_file, 
+            data=data, overwrite=True, 
+            content_settings=ContentSettings(content_type='application/pdf')
+        )
+
+
+    # Also upload as 'latest' for direct link
+    with open(resume_pdf_file, "rb") as data:
+        container_client.upload_blob(
+            name="Frank_Refol_Resume_latest.pdf", 
+            data=data, 
+            overwrite=True,
+            content_settings=ContentSettings(content_type='application/pdf')
+        )
 
     print(f"File '{resume_pdf_file}' uploaded to blob '{resume_pdf_file}' in container '{container_name}'.")
 
