@@ -46,12 +46,12 @@ html_file = "index.html"  # Resume file
 # except Exception as e:
 #     print(f"An error occurred trying to modify the html resume file: {e}")
 
-# try:
-#     # Convert HTML to PDF
-#     HTML(html_file).write_pdf(resume_pdf_file) 
+try:
+    # Convert HTML to PDF
+    HTML(html_file).write_pdf(resume_pdf_file) 
 
-# except Exception as e:
-#     print(f"An error occurred trying to convert the resume to PDF: {e}")
+except Exception as e:
+    print(f"An error occurred trying to convert the resume to PDF: {e}")
 
 connection_string = os.environ["AZURE_STORAGE_CONNECTION_STRING"]
 container_name = os.environ["AZURE_STORAGE_CONTAINER"]
