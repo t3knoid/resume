@@ -12,32 +12,37 @@ date_string = now.strftime("%Y%m%d")
 resume_pdf_file = f'Frank_Refol_Resume_{date_string}.pdf'
 
 try:
-    # Read the HTML file
+
     html_file = "index.html"  # Resume file
-    with open(html_file, "r", encoding="utf-8") as file:
-        soup = BeautifulSoup(file, "html.parser")
+    #
+    #  Removing this whole section since we will point to latest all the time
+    #
 
-    # Find the section with id="footer" and class="footer"
-    footer_section = soup.find("section", {"id": "footer", "class": "footer"})
+    # # Read the HTML file
+    # with open(html_file, "r", encoding="utf-8") as file:
+    #     soup = BeautifulSoup(file, "html.parser")
 
-    # Modify the href inside the <a> tag
-    if footer_section:
-        link_tag = footer_section.find("a")
-        if link_tag:
-            link_tag["href"] = f"https://homelabstore1.blob.core.windows.net/$web/{resume_pdf_file}"  # New URL
-            print(f"Updated footer link to: {link_tag['href']}")  # Success message
-        else:
-            print("No <a> tag found in footer section.")
+    # # Find the section with id="footer" and class="footer"
+    # footer_section = soup.find("section", {"id": "footer", "class": "footer"})
 
-        last_updated_tag = footer_section.find("p", class_="last-updated")
-        if last_updated_tag:
-            new_date = now.strftime("%B %d, %Y")
-            last_updated_tag.string = f"Last updated: {new_date}"
-            print(f"Updated last-updated date to: {last_updated_tag.string}")  # Success message
-        else:
-            print("No <p class='last-updated'> tag found in footer section.")
-    else:
-        print("Footer section not found.")
+    # # Modify the href inside the <a> tag
+    # if footer_section:
+    #     link_tag = footer_section.find("a")
+    #     if link_tag:
+    #         link_tag["href"] = f"https://homelabstore1.blob.core.windows.net/$web/{resume_pdf_file}"  # New URL
+    #         print(f"Updated footer link to: {link_tag['href']}")  # Success message
+    #     else:
+    #         print("No <a> tag found in footer section.")
+
+    #     last_updated_tag = footer_section.find("p", class_="last-updated")
+    #     if last_updated_tag:
+    #         new_date = now.strftime("%B %d, %Y")
+    #         last_updated_tag.string = f"Last updated: {new_date}"
+    #         print(f"Updated last-updated date to: {last_updated_tag.string}")  # Success message
+    #     else:
+    #         print("No <p class='last-updated'> tag found in footer section.")
+    # else:
+    #     print("Footer section not found.")
 
     # Write the updated HTML back to the file
     with open(html_file, "w", encoding="utf-8") as file:

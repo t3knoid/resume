@@ -107,9 +107,9 @@ python3 htmtopdf.py
 
 * The script performs:
 
-  * Updates the HTML footer with the new PDF URL and “Last updated” timestamp
   * Converts `index.html` to a **timestamped PDF** (e.g., `Frank_Refol_Resume_20251209.pdf`)
   * Uploads the PDF to Azure Blob Storage
+  * Uploads a  `Frank_Refol_Resume_Latest.pdf` as well
 
 > Using timestamped PDF filenames ensures that every generated version is unique and provides clear versioning history in Azure.
 
