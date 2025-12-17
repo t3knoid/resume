@@ -1,6 +1,6 @@
 
 # Resume
-This is a very simple resume format using HTML and CSS. You can view [my resume](https://t3knoid.github.io/resume/) in HTML using this technique in Github Pages.
+This is a very simple resume format using HTML and CSS. You can view [my resume](https://resume.refol.us) in HTML using this technique in Github Pages.
 
 My resume is also available as a PDF generated automatically when it is committed to GitHub as described [below](#automated-resume-pdf-generation--upload).
 
