@@ -12,11 +12,30 @@
   <meta content="Francis Refol" name="author"/>
   <meta content="Frank Refol" name="creator"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet"/>
+       <!-- small inline critical CSS to reduce render-blocking and speed FCP/LCP -->
+       <style>
+              :root{--main-color:#272829}
+              html,body{font-family:Verdana, sans-serif;color:var(--main-color);margin:0}
+              .container{max-width:900px;margin:0 auto;padding:0 1rem;box-sizing:border-box}
+              h3{font-size:1.05rem;margin-top:0.5rem}
+       </style>
+       <!-- Accessibility overrides: ensure links are distinguishable and footer text contrast -->
+       <style>
+         a { text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; color: #0563bb; }
+         a:hover { text-decoration-color: currentColor; color: #067ded; }
+         a:focus { outline: 3px solid rgba(5,99,187,0.18); outline-offset: 2px; }
+         .last-updated, .footer .last-updated { color: #111111 !important; }
+       </style>
+       <!-- Template Main CSS File (preload minified stylesheet) -->
+       <link rel="preload" href="assets/css/style.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+       <noscript><link href="assets/css/style.min.css" rel="stylesheet"></noscript>
+       <!-- inline favicon to avoid 404 and console error -->
+       <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%92%BB%3C/text%3E%3C/svg%3E">
   <link href="assets/css/print.css" media="print" rel="stylesheet" type="text/css"/>
  </head>
  <body>
+  <div class="container">
+        <main id="main">
   <section class="contact" id="contact">
    <div class="info">
     <table>
@@ -481,6 +500,8 @@
      Last updated: June 10, 2025
     </p>
    </div>
-  </section>
+       </section>
+        </main>
+       </div>
  </body>
 </html>

@@ -156,3 +156,40 @@ python3 htmtopdf.py
 
 * The **timestamped naming convention** ensures each resume PDF uploaded to Azure has a unique URL while preserving historical versions.
 * The footer URL in the HTML is automatically updated to point to the latest version.
+
+---
+
+## Evaluating the page with Lighthouse
+
+You can use Google's Lighthouse CLI to audit Performance, Accessibility, Best Practices and SEO for the local copy of this site.
+
+Prerequisites:
+
+- Node.js and npm (Lighthouse runs via npm / npx)
+- A recent Google Chrome installation (Lighthouse uses Chrome to run audits)
+- A local web server to serve the files (for example, Python's `http.server`)
+
+Quick steps:
+
+1. Start a local server from the repository root (example using Python):
+
+```bash
+python -m http.server 8000
+```
+
+2. Run Lighthouse from another terminal (example CLI):
+
+```bash
+npx -y lighthouse http://localhost:8000/index.html \
+  --only-categories=performance,accessibility,best-practices,seo \
+  --output html --output-path lighthouse-report.html \
+  --chrome-flags="--headless"
+```
+
+3. Open the generated report [lighthouse-report.html](lighthouse-report.html) in a browser to review results and suggestions.
+
+Notes:
+
+- Run the web server in a separate terminal from the Lighthouse command to avoid conflicts.
+- If you prefer a GUI, Chrome Developers Tools (F12) contains Lighthouse under the "Lighthouse" panel.
+- For CI runs, install Chrome on your runner and execute the same `npx lighthouse` command. GitHub Actions runners already include Chrome and Node on hosted images.
