@@ -1,10 +1,9 @@
 import argparse
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 import re
 
 DEFAULT_INPUT = "index.html"
 DEFAULT_OUTPUT = "resume_ats.html"
-
 
 def clean_text(text):
     return re.sub(r"\s+", " ", text.strip())
@@ -67,12 +66,26 @@ def main():
     header.append(h1)
 
     p = ats.new_tag("p")
-    p.string = (
-        f"{clean_text(title_role.get_text())}\n"
-        f"Email: {clean_text(email.get_text())} | "
-        f"Phone: {clean_text(phone.get_text())}\n"
-        f"Portfolio: {url['href']}"
-    )
+
+    # Add role
+    p.append(NavigableString(clean_text(title_role.get_text())))
+    p.append(ats.new_tag("br"))
+
+    # Add email
+    p.append(NavigableString(f"Email: {clean_text(email.get_text())}"))
+    p.append(ats.new_tag("br"))
+
+    # Add phone
+    p.append(NavigableString(f"Phone: {clean_text(phone.get_text())}"))
+    p.append(ats.new_tag("br"))
+
+    portfolio_url = url['href'] if url else "N/A"
+
+    # Add clickable portfolio link
+    a_tag = ats.new_tag("a", href=portfolio_url)
+    a_tag.string = portfolio_url
+    p.append(NavigableString("Portfolio: "))
+    p.append(a_tag)
     header.append(p)
     body.append(header)
 
