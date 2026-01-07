@@ -21,7 +21,7 @@ try:
     soup = BeautifulSoup(html, "html.parser")
 
     # Find the section with id="footer" and class="footer"
-    footer_section = soup.find(id="footer", class_="footer" )
+    footer_section = soup.find("section", {"id": "footer", "class": "footer"})
 
     # Selectively modify Last updated date
     if footer_section:
