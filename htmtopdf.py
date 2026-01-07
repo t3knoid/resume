@@ -36,7 +36,7 @@ def update_last_updated(soup: BeautifulSoup, now: datetime.datetime) -> bool:
     footer = soup.find(id='footer')
     if not footer:
         return False
-    p = footer.find('p', class_='last-updated')
+    p = footer.find('span', class_='last-updated')
     if not p:
         return False
     new_text = f"Last updated: {now.strftime('%B %d, %Y')}"
