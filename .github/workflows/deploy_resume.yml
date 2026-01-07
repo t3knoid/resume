@@ -51,6 +51,9 @@ jobs:
             echo "Disallow: /$latest" >> robots.txt
           fi
 
+          # Ensure no duplicate entries
+          grep -v "Disallow: /$latest" robots.txt > robots_tmp.txt && mv robots_tmp.txt robots.txt
+
           # Add new entries
           echo "Disallow: /$dated" >> robots.txt
 
