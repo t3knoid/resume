@@ -1,0 +1,3 @@
+User-Agent: *
+Disallow: /Frank_Refol_Resume_latest.pdf
+Disallow: /Frank_Refol_Resume_20260107.pdf
