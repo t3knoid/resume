@@ -27,15 +27,27 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Step 4: Run the script
+      # Step 4: Generate ATS-friendly resume HTML
+      - name: Generate ATS-friendly Resume HTML
+        run: python3 scripts/html_to_ats_resume.py
+
+      # Step 5: Generate PDF of standard resume and upload to Azure Storage
       - name: Generate and Upload PDF
         id: pdfgen
         env:
           AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
           AZURE_STORAGE_CONTAINER: ${{ secrets.AZURE_STORAGE_CONTAINER }}
-        run: python3 htmtopdf.py
+        run: python3 scripts/htmtopdf.py
 
-      # Step 5: Update robots.txt
+      # Step 6: Generate PDF of ATS-friendly resume and upload to Azure Storage
+      - name: Generate and Upload ATS-friendly PDF
+        id: pdfgen_ats
+        env:
+          AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+          AZURE_STORAGE_CONTAINER: ${{ secrets.AZURE_STORAGE_CONTAINER }}
+        run: python3 scripts/htmtopdf.py --suffix resume_ats --html resume_ats.html
+
+      # Step 7: Update robots.txt
       - name: Update robots.txt
         run: |
           dated="${{ steps.pdfgen.outputs.dated_pdf }}"
@@ -57,18 +69,18 @@ jobs:
           # Add new entries
           echo "Disallow: /$dated" >> robots.txt
 
-      # Step 6: Commit and push changes to robots.txt and index.html
-      - name: Commit and Push robots.txt and index.html changes
+      # Step 7: Commit and push changes to robots.txt, index.html, resume_ats.html
+      - name: Commit and Push robots.txt, index.html, and resume_ats.html changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add robots.txt index.html
+          git add robots.txt index.html resume_ats.html
 
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "Update robots.txt for new resume PDFs and index.html footer"
+            git commit -m "Update robots.txt, index.html, resume_ats.html"
             git push
           fi
 
