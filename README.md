@@ -1,5 +1,6 @@
 
 # Resume
+
 This is a very simple resume format using HTML and CSS. You can view [my resume](https://resume.refol.us) in HTML using this technique in Github Pages.
 
 My resume is also available as a PDF generated automatically when it is committed to GitHub as described [below](#automated-resume-pdf-generation--upload).
@@ -12,36 +13,44 @@ My resume is also available as a PDF generated automatically when it is committe
 
 Each work experience is encapsulated in using the following div item.
 
-```
+``` html
 <!-- Company name -->
 <div class="resume-item">
-	<table>
-		<tr>
-			<td>
-				<div class="resume-position">
-					Job position
-				</div>
-				<div class="resume-company">
-					<a href="https://www.companyurl.com/" target="_blank">Some Company Name</a> | Anytown, USA
-				</div>
-				<div class="resume-company-description">
-					Short description of the company.
-				</div> 
-			</td>
-			<td class="resume-dateworked">
-				MMM YYYY-MMM YYYY<br/>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<ul>
-					<li>Responsibility 1.</li>
-					<li>Responsibility 2.</li>
-					<li>Responsibility 3.</li>
-				</ul>
-			</td>
-		</tr>
-	</table>
+  <table>
+    <tr>
+      <td>
+        <div class="resume-position">
+          Job position
+        </div>
+      </td>
+      <td class="resume-date-worked">
+        MMM YYYY-MMM YYYY<br/>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <div class="resume-company">
+          <a href="https://www.companyurl.com/" target="_blank">Some Company Name</a> | Anytown, USA
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <div class="resume-company-description">
+          Short description of the company.
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <ul>
+          <li><div class="highlight">Responsibility 1.</div></li>
+          <li><div class="highlight">Responsibility 2.</div></li>
+          <li><div class="highlight">Responsibility 3.</div></li>
+        </ul>
+      </td>
+    </tr>
+  </table>
 </div>
 ```
 
@@ -57,6 +66,57 @@ The HTML contains a static link to a PDF format of the resume. The download link
 
 This repository includes a Python script, [`htmtopdf.py`](htmtopdf.py), which automates generating a PDF version of the HTML resume and uploading it to Azure Blob Storage. The script can be executed **manually** or automatically via GitHub Actions.
 
+### **Local / Debug options**
+
+---
+
+`htmtopdf.py` provides a few options and environment variables useful when running locally or debugging:
+
+- **CLI options:**
+  - `--no-upload` : skip uploading the generated PDF (local testing)
+  - `--html <path>` : specify an alternate HTML file to convert (default: `index.html`)
+  - `--out <file>` : set the output PDF filename (default: `Frank_Refol_Resume_YYYYMMDD.pdf`)
+- **Environment variables:**
+  - `SKIP_UPLOAD=1` or `SKIP_UPLOAD=true` : same effect as `--no-upload`
+  - `AZURE_STORAGE_CONNECTION_STRING` and `AZURE_STORAGE_CONTAINER` : required to perform uploads
+  - When running in GitHub Actions the script will write outputs to the `GITHUB_OUTPUT` file if available.
+
+Recommended local debug workflow:
+
+1. Create and activate a virtual environment and install dependencies:
+
+```powershell
+$env:VENV=.venv
+python -m venv $env:VENV
+& $env:VENV\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+1. Run the script without uploading to verify footer update and PDF generation:
+
+```powershell
+python htmtopdf.py --no-upload
+```
+
+1. Verify results:
+
+- `index.html` should have an updated `Last updated:` date in the footer (script prints a message).
+- A timestamped PDF (e.g. `Frank_Refol_Resume_20260107.pdf`) should be created in the repo root.
+
+1. If you want to test upload, set the Azure env vars and run without `--no-upload` (or unset `SKIP_UPLOAD`):
+
+```powershell
+$env:AZURE_STORAGE_CONNECTION_STRING='...'
+$env:AZURE_STORAGE_CONTAINER='$web'
+python htmtopdf.py
+```
+
+Troubleshooting notes:
+
+- If the script attempts to upload but you don't want to, pass `--no-upload` or set `SKIP_UPLOAD`.
+- If upload fails, confirm the connection string and container are correct; the script prints any upload errors.
+- For CI, ensure `AZURE_STORAGE_CONNECTION_STRING` and `AZURE_STORAGE_CONTAINER` are stored as repository secrets.
+
 ---
 
 ### **1. Get Azure Storage Credentials**
@@ -65,13 +125,13 @@ To upload the PDF, you need:
 
 1. **Azure Storage account connection string**
 
-   * Go to the [Azure Portal](https://portal.azure.com/) → your **Storage Account** → **Security + networking → Access keys**
-   * Click **Show keys** and copy the **Connection string**
+   - Go to the [Azure Portal](https://portal.azure.com/) → your **Storage Account** → **Security + networking → Access keys**
+   - Click **Show keys** and copy the **Connection string**
 
 2. **Container name**
 
-   * For static website hosting, use `$web`
-   * Otherwise, specify the container where you want the PDF uploaded
+   - For static website hosting, use `$web`
+   - Otherwise, specify the container where you want the PDF uploaded
 
 ---
 
@@ -83,7 +143,7 @@ To upload the PDF, you need:
 pip install -r requirements.txt
 ```
 
-2. **Set Azure credentials as environment variables**:
+1. **Set Azure credentials as environment variables**:
 
 **Linux / macOS:**
 
@@ -99,17 +159,17 @@ $env:AZURE_STORAGE_CONNECTION_STRING='your_connection_string_here'
 $env:AZURE_STORAGE_CONTAINER="$web"
 ```
 
-3. **Run the script**:
+1. **Run the script**:
 
 ```bash
 python3 htmtopdf.py
 ```
 
-* The script performs:
+- The script performs:
 
-  * Converts `index.html` to a **timestamped PDF** (e.g., `Frank_Refol_Resume_20251209.pdf`)
-  * Uploads the PDF to Azure Blob Storage
-  * Uploads a  `Frank_Refol_Resume_Latest.pdf` as well
+  - Converts `index.html` to a **timestamped PDF** (e.g., `Frank_Refol_Resume_20251209.pdf`)
+  - Uploads the PDF to Azure Blob Storage
+  - Uploads a  `Frank_Refol_Resume_Latest.pdf` as well
 
 > Using timestamped PDF filenames ensures that every generated version is unique and provides clear versioning history in Azure.
 
@@ -117,11 +177,11 @@ python3 htmtopdf.py
 
 ### **3. Automated Execution via GitHub Actions**
 
-* A GitHub Actions workflow can automate the process on every push to the `main` branch or via manual trigger.
-* Store the Azure credentials as **GitHub Secrets**:
+- A GitHub Actions workflow can automate the process on every push to the `main` branch or via manual trigger.
+- Store the Azure credentials as **GitHub Secrets**:
 
-  * `AZURE_STORAGE_CONNECTION_STRING` → your connection string
-  * `AZURE_STORAGE_CONTAINER` → your container name (`$web`)
+  - `AZURE_STORAGE_CONNECTION_STRING` → your connection string
+  - `AZURE_STORAGE_CONTAINER` → your container name (`$web`)
 
 ---
 
@@ -154,8 +214,8 @@ python3 htmtopdf.py
          - Runs script automatically
 ```
 
-* The **timestamped naming convention** ensures each resume PDF uploaded to Azure has a unique URL while preserving historical versions.
-* The footer URL in the HTML is automatically updated to point to the latest version.
+- The **timestamped naming convention** ensures each resume PDF uploaded to Azure has a unique URL while preserving historical versions.
+- The footer URL in the HTML is automatically updated to point to the latest version.
 
 ---
 
@@ -177,13 +237,13 @@ Quick steps:
 python -m http.server 8000
 ```
 
-2. Run Lighthouse from another terminal (example CLI):
+1. Run Lighthouse from another terminal (example CLI):
 
 ```bash
 npx -y lighthouse http://localhost:8000/index.html --only-categories=performance,accessibility,best-practices,seo --output html --output-path lighthouse-report.html --chrome-flags="--headless"
 ```
 
-3. Open the generated report [lighthouse-report.html](lighthouse-report.html) in a browser to review results and suggestions.
+1. Open the generated report [lighthouse-report.html](lighthouse-report.html) in a browser to review results and suggestions.
 
 Notes:
 
