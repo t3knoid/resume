@@ -58,7 +58,7 @@ jobs:
           echo "Disallow: /$dated" >> robots.txt
 
       # Step 6: Commit and push changes to robots.txt and index.html
-      - name: Commit and Push robots.txt
+      - name: Commit and Push robots.txt and index.html changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
