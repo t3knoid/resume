@@ -83,5 +83,10 @@ try:
 
     print(f"File '{resume_pdf_file}' uploaded to blob '{resume_pdf_file}' in container '{container_name}'.")
 
+    # Set GitHub Actions outputs
+    with open(os.environ['GITHUB_OUTPUT'], 'a') as gh:
+        gh.write(f"dated_pdf={resume_pdf_file}\n")
+        gh.write(f"latest_pdf=Frank_Refol_Resume_latest.pdf\n")
+
 except Exception as e:
     print(f"An error occurred trying to upload the resume PDF: {e}")

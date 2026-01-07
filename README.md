@@ -88,14 +88,14 @@ pip install -r requirements.txt
 **Linux / macOS:**
 
 ```bash
-export AZURE_STORAGE_CONNECTION_STRING="your_connection_string_here"
-export AZURE_STORAGE_CONTAINER="$web"
+export AZURE_STORAGE_CONNECTION_STRING='your_connection_string_here'
+export AZURE_STORAGE_CONTAINER='$web'
 ```
 
 **Windows (PowerShell):**
 
 ```powershell
-$env:AZURE_STORAGE_CONNECTION_STRING="your_connection_string_here"
+$env:AZURE_STORAGE_CONNECTION_STRING='your_connection_string_here'
 $env:AZURE_STORAGE_CONTAINER="$web"
 ```
 
@@ -180,10 +180,7 @@ python -m http.server 8000
 2. Run Lighthouse from another terminal (example CLI):
 
 ```bash
-npx -y lighthouse http://localhost:8000/index.html \
-  --only-categories=performance,accessibility,best-practices,seo \
-  --output html --output-path lighthouse-report.html \
-  --chrome-flags="--headless"
+npx -y lighthouse http://localhost:8000/index.html --only-categories=performance,accessibility,best-practices,seo --output html --output-path lighthouse-report.html --chrome-flags="--headless"
 ```
 
 3. Open the generated report [lighthouse-report.html](lighthouse-report.html) in a browser to review results and suggestions.
