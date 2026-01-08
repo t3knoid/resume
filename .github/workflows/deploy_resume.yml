@@ -56,23 +56,22 @@ jobs:
       - name: Update robots.txt
         run: |
           dated="${{ steps.pdfgen.outputs.dated_pdf }}"
+          dated_ats="${{ steps.pdfgen_ats.outputs.dated_pdf }}"
           latest="${{ steps.pdfgen.outputs.latest_pdf }}"
+          latest_ats="${{ steps.pdfgen_ats.outputs.latest_pdf }}"
 
           echo "Updating robots.txt with:"
           echo "  $dated"
+          echo "  $dated_ats"
           echo "  $latest"
+          echo "  $latest_ats"
 
-          # Ensure robots.txt exists
-          if [ ! -f robots.txt ]; then
-            echo "User-Agent: *" > robots.txt
-            echo "Disallow: /$latest" >> robots.txt
-          fi
-
-          # Ensure no duplicate entries
-          grep -v "Disallow: /$latest" robots.txt > robots_tmp.txt && mv robots_tmp.txt robots.txt
-
-          # Add new entries
+          # Create or update robots.txt to disallow crawlers from indexing dated and latest PDFs    
+          echo "User-Agent: *" > robots.txt
           echo "Disallow: /$dated" >> robots.txt
+          echo "Disallow: /$dated_ats" >> robots.txt
+          echo "Disallow: /$latest" >> robots.txt
+          echo "Disallow: /$latest_ats" >> robots.txt
 
       # Step 7: Commit and push changes to robots.txt, index.html, resume_ats.html
       - name: Commit and Push robots.txt, index.html, and resume_ats.html changes
@@ -88,4 +87,3 @@ jobs:
             git commit -m "Update robots.txt, index.html, resume_ats.html"
             git push
           fi
-
