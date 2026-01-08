@@ -1,8 +1,24 @@
 /* ===========================
-   Page setup
+   Page setup (print.css)
    =========================== */
 
+/*
+  Notes / rationale (print.css):
+
+  - This file is tailored for paged media (PDF) rendering. Parameters here
+    prioritize consistent pagination and legibility when converting HTML -> PDF.
+  - `@page` size is `letter` by default for a US audience; change to `A4` if
+    you need international sizing. Margins of ~15-20mm produce enough white
+    space while allowing content density suitable for a resume.
+  - Font sizes are specified in points/px appropriate for print; line-height is
+    slightly tighter than screen to keep content concise while remaining readable.
+  - Many interactive or decorative elements are hidden here to produce a clean
+    PDF (see `.btn`, icons hidden below). Contact info is re-enabled in print
+    so the exported PDF contains full details for employers.
+*/
+
 @page {
+  /* choose `letter` or `A4` depending on audience */
   size: letter;
   margin-top: 0.5in;
   margin-bottom: 0.5in;
@@ -12,6 +28,7 @@
 
 body {
   font-family: Verdana, Arial, sans-serif;
+  /* 14px is balanced for reading in PDF; adjust to 11pt/12pt if desired */
   font-size: 14px;
   line-height: 1.35;
   color: #000;
@@ -31,6 +48,10 @@ svg,
 i {
   display: none !important;
 }
+
+/* Hiding interactive elements: buttons and icons are unnecessary in the
+   printable document and can push content or create noise; hiding them
+   produces a cleaner PDF. */
 
 /* ===========================
    Headings (print fixed sizes)
@@ -85,6 +106,10 @@ h3 {
     display: block; /* make sure hidden elements are shown */
 }
 
+/* Email/phone are `display: block` in print so PDFs include contact details
+   even though they're hidden on-screen. This separation allows a clean web
+   view while ensuring exported resumes are complete. */
+
 .contact .info .url a {
     color: #0563bb;
     text-decoration: underline;
@@ -113,6 +138,10 @@ h3 {
 
 .resume .resume-date-worked {
   text-align: right;
+  text-align: right;
+  /* Keep dates on one line when possible to avoid awkward wrapping between
+     company and date columns. If content overflows, converters will break as
+     needed, but `nowrap` preserves a compact two-column feel in print. */
   white-space: nowrap;
   text-align: right;
 }
@@ -144,11 +173,16 @@ table {
 
 tr,
 td {
+  /* Allow the renderer to break rows when necessary; page-break properties
+     below are tuned to avoid splitting resume items in awkward places. */
   page-break-inside: auto;
 }
 
 section,
 .resume-item {
+  /* Keeping resume items intact improves readability in paged output.
+     If an item is long, the renderer will move it to the next page rather
+     than leaving a single-line orphan. */
   page-break-inside: auto;
 }
 

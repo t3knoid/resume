@@ -2,6 +2,20 @@
    Base (screen)
    =========================== */
 
+/*
+  Notes / rationale (style.css):
+
+  - This stylesheet targets on-screen presentation (desktop and mobile).
+  - Margins here are modest and echo the print layout so HTML-to-PDF conversions
+    carry similar spacing; keeping them in CSS simplifies visual parity.
+  - `font-family: Verdana` and `font-size: 12px` give compact, readable text
+    for a resume density that also reads well on small screens.
+  - Use of relative units (rem, %) and responsive helpers below (clamp(), flex-wrap)
+    helps typography/layout scale smoothly across viewport widths.
+  - Some elements (like `.contact .info .email`) are hidden on screen to reduce
+    clutter; the printable stylesheet re-enables them so the PDF contains contact info.
+*/
+
 body {
   color: #272829;
   margin-top: 0.5in;
@@ -99,6 +113,10 @@ section {
   left: calc(50% - 20px);
 }
 
+/* Heading sizing uses `clamp()` so font sizes grow on very large viewports
+   but remain readable on small screens. This balances visual hierarchy
+   without hard-coding many breakpoints. */
+
 /* ===========================
    Contact (screen)
    =========================== */
@@ -126,7 +144,8 @@ section {
 
 
 .contact .info .email, .contact .info .phone {
-  display: none; /* hide email and phone on screen */
+  display: none; /* hide email and phone on screen - reduces clutter for viewers on small devices
+                     These are enabled in `print.css` so exported PDFs include full contact details. */
 }
 
 .contact .info .url a {
@@ -168,8 +187,11 @@ section {
   border-spacing: 2px;
   border: 0px;
   font-weight: 400;
-  page-break-inside:avoid; 
-  page-break-after:auto;
+  /* These page-break properties are included to reduce awkward breaks when
+     the same HTML is rendered to PDF. They have no negative effect on screen
+     and help the print stylesheet (and converters) keep items together. */
+  page-break-inside: avoid;
+  page-break-after: auto;
 }
 
 .resume ul {
@@ -304,6 +326,10 @@ section {
     overflow-x: auto !important;
     table-layout: auto !important;
   }
+
+  /* Rationale: allowing horizontal scroll preserves table contents and avoids
+     truncation on very narrow screens. We prefer scroll over forcing tiny
+     fonts, and the print stylesheet will use fixed table layout for PDF output. */
 
   .resume table th,
   .resume table td {
