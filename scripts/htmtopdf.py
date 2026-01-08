@@ -113,7 +113,8 @@ def main(argv: Optional[list] = None) -> int:
         latest_pdf_file = f"{base}_latest.pdf"
     else:
         resume_pdf_file = f"Frank_Refol_{suffix}_{date_string}.pdf"
-        latest_pdf_file = "Frank_Refol_ats_latest.pdf"
+        # Use the configured suffix for the "latest" filename as well
+        latest_pdf_file = f"Frank_Refol_{suffix}_latest.pdf"
 
     latest_blob_name = os.path.basename(latest_pdf_file)
     upload_latest = True
