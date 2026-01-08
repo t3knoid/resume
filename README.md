@@ -11,10 +11,6 @@ This repository provides a simple **HTML/CSS resume** with automatic **PDF gener
 
 ## ATS-Friendly Resume
 
-Perfect! I’ve updated the README section for the **ATS-Friendly Resume** to include a note about how it is generated using your `scripts/html_to_ats_resume.py` script. Here’s the integrated Markdown version for that section:
-
-## ATS-Friendly Resume
-
 **ATS** stands for **Applicant Tracking System**. These are software tools used by many employers to automatically scan, parse, and rank resumes based on keywords, formatting, and experience.  
 
 Standard PDFs or HTML resumes with complex formatting may not be read correctly by ATS software, which can result in your application being overlooked.  
@@ -129,8 +125,8 @@ python htmtopdf.py --no-upload
 
 1. **Get credentials:**
 
-   * Connection string: [Azure Portal → Storage Account → Access keys → Show keys](https://portal.azure.com/)
-   * Container: `$web` for static website
+   - Connection string: [Azure Portal → Storage Account → Access keys → Show keys](https://portal.azure.com/)
+   - Container: `$web` for static website
 
 2. **Set environment variables:**
 
