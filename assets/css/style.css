@@ -302,7 +302,6 @@ section {
     width: 100% !important;
     max-width: 100% !important;
     overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch;
     table-layout: auto !important;
   }
 
