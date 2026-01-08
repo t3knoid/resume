@@ -1,14 +1,5 @@
 User-Agent: *
-Disallow: /Frank_Refol_Resume_20260107.pdf
-Disallow: /Frank_Refol_Resume_20260107.pdf
-Disallow: /Frank_Refol_Resume_20260107.pdf
-Disallow: /Frank_Refol_Resume_20260107.pdf
-Disallow: /Frank_Refol_Resume_20260107.pdf
-Disallow: /Frank_Refol_Resume_20260107.pdf
-Disallow: /Frank_Refol_Resume_20260107.pdf
-Disallow: /Frank_Refol_Resume_20260107.pdf
 Disallow: /Frank_Refol_Resume_20260108.pdf
-Disallow: /Frank_Refol_Resume_20260108.pdf
-Disallow: /Frank_Refol_Resume_20260108.pdf
-Disallow: /Frank_Refol_Resume_20260108.pdf
-Disallow: /Frank_Refol_Resume_20260108.pdf
+Disallow: /Frank_Refol_resume_ats_20260108.pdf
+Disallow: /Frank_Refol_Resume_latest.pdf
+Disallow: /Frank_Refol_resume_ats_latest.pdf
