@@ -1,258 +1,114 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-    <title>Frank Refol resume</title>
-    <meta charset="utf-8"/>
-    <meta content="Experienced IT Automation and Monitoring Engineer with a proven track record in designing and maintaining enterprise infrastructure. Skilled in CI/CD, automated testing, system monitoring, and disaster recovery. Adept at collaborating across teams to implement scalable DevOps solutions and ensure operational resilience." name="description"/>
-    <meta content="Resume, DevOps, Developer, Automation, Ansible, Application, Systems, Engineer, Linux, Windows, TeamCity, GitHub, Git, Jenkins, Docker, Vsphere, esxi, containerization, Software, C#, Java, Python" name="keywords"/>
-    <meta content="Francis Refol" name="author"/>
-    <meta content="Frank Refol" name="creator"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <!-- small inline critical CSS to reduce render-blocking and speed FCP/LCP -->
-    <style>
-      :root { --main-color: #272829 }
-      html, body { font-family: Verdana, sans-serif; color: var(--main-color); margin: 0 }
-      .container, main { max-width: 900px; margin: 0 auto; padding: 0 1rem; box-sizing: border-box }
-      h3 { font-size: 1.05rem; margin-top: 0.5rem }
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Francis Refol – Resume</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>Francis Refol</h1>
+    <p>
+      DevOps Engineer • Platform Engineer • CI/CD & Automation Specialist
+    </p>
+    <p>
+      📧 t3knoid@live.com | 📱 917-933-5124 | 🌐 <a href="https://resume.refol.us">resume.refol.us</a> | Portfolio: <a href="https://portfolio.refol.us">portfolio.refol.us</a>
+    </p>
+  </header>
 
-      /* Accessibility overrides: ensure links are distinguishable and footer text contrast */
-      a { text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; color: #0563bb }
-      a:hover { text-decoration-color: currentColor; color: #067ded }
-      a:focus { outline: 3px solid rgba(5,99,187,0.18); outline-offset: 2px }
-      .last-updated, .footer .last-updated { color: #111111 !important }
-    </style>
-    <link as="style" href="assets/css/style.css" onload="this.onload=null;this.rel='stylesheet'" rel="preload"/>
-    <link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%92%BB%3C/text%3E%3C/svg%3E" rel="icon"/>
-    <link href="assets/css/print.css" media="print" rel="stylesheet" type="text/css"/>
-  </head>
-  <body>
-    <div class="container">
-      <main id="main">
+  <!-- Professional Summary -->
+  <section>
+    <h2>Professional Summary</h2>
+    <p>
+      Senior DevOps / Platform Engineer with 15+ years of experience designing, automating, and operating CI/CD platforms, build systems, and infrastructure automation pipelines. Skilled in Jenkins, TeamCity, Ansible, Linux, and hybrid environments. Experienced in enterprise and embedded systems, with hands-on home lab experience extending automation practices into Azure.
+    </p>
+  </section>
 
-        <!-- -- Contact Information ---->
-        <section class="contact" id="contact">
-          <div class="info">
-            <table><tbody>
-              <tr>
-                <td>
-                  <div class="name">Francis Refol</div>
-                  <div class="title">IT Automation Engineer / DevOps / Infrastructure</div>
-                  <div class="url"><a href="https://portfolio.refol.us">https://portfolio.refol.us</a></div>
-                </td>
-                <td>
-                  <div class="email">t3knoid@live.com</div>
-                  <div class="phone">917.933.5124</div>
-                </td>
-              </tr>
-            </tbody></table>
-          </div>
-        </section>
+  <!-- Core Skills -->
+  <section>
+    <h2>Core Skills</h2>
+    <ul class="skills-list">
+      <li>Jenkins, TeamCity, GitHub Actions, Build & Release Automation</li>
+      <li>Ansible, Terraform, Infrastructure as Code (IaC), Configuration Management</li>
+      <li>Linux, Proxmox, VMware, Hybrid Infrastructure</li>
+      <li>Docker, MSI Packaging, Artifact Management (JFrog Artifactory, XRay)</li>
+      <li>Monitoring, Logging, Alerting, Operational Dashboards</li>
+      <li>Python, Bash, PowerShell, Git, REST APIs</li>
+      <li>Azure (VMs, networking fundamentals, identity concepts – lab experience)</li>
+    </ul>
+  </section>
 
-        <!-- Professional Summary & Work History -->
-        <section class="resume" id="resume-summary">
-          <h3>Professional Summary</h3>
-          <p class="summary">Hands-on infrastructure and automation engineer with experience designing and operating shared systems using infrastructure-as-code, CI/CD pipelines, identity management, and cloud-native tooling. Proven ability to automate, standardize, and maintain enterprise-grade environments that support reliable software delivery. Strong collaborator across engineering, security, and operations teams, focused on improving system reliability, operational efficiency, and developer workflows.
-          </p>
-        </section>
+  <!-- Professional Experience -->
+  <section>
+    <h2>Professional Experience</h2>
 
-        <!-- Work History -->
-        <section class="resume" id="work-history">
-          <h3>Work Experience</h3>
-          <!-- TCDI -->
-          <div class="resume-item" id="tcdi">
-            <table>
-              <tbody>
-              <tr>
-                <td class="resume-position">Technical Applications Engineer</td>
-                <td class="resume-date-worked">Jul 2022-Aug 2024</td>
-              </tr>
-              <tr>
-                <td colspan="2"><span class="resume-company">Technology Concepts &amp; Design Inc</span> | Purchase, NY</td>
-              </tr>
-              <tr>
-                <td colspan="2"><span class="resume-company-description">TCDI is a legal services and cybersecurity solutions company.</span></td>
-              </tr>
-              <tr>
-                <td colspan="2"><div class="resume-responsibilities">
-                  <ul>
-                    <li><span class="highlight">Developed Ansible scripts</span> to automate comprehensive management of network inventories, including the deployment of security patches and application updates. Leveraged APIs and SQL for playbook creation.</li>
-                    <li><span class="highlight">Configured and maintained enterprise monitoring tools</span> to track system health and job workflows across hybrid environments (Windows, Linux).</li>
-                    <li><span class="highlight">Managed and maintained</span> critical development assets for the TCDI team, including GitHub Enterprise server, TeamCity, JFrog Artifactory, JFrog XRay, and SonarQube.</li>
-                    <li><span class="highlight">Supported and administered</span> virtual machines running on Windows and Ubuntu Linux operating systems.</li>
-                    <li><span class="highlight">Supported and administered</span> PingID and PingFederate to orchestrate authentication and authorization of users to internal applications.</li>
-                    <li><span class="highlight">Maintained and supported</span> Nuix servers utilized by e-Discovery data processors.</li>
-                    <li><span class="highlight">Developed and maintained</span> software using C# and Java, integrating with Nuix and Relativity APIs.</li>
-                    <li><span class="highlight">Authored and maintained Standard Operating Procedures (SOPs)</span> to document daily operational workflows, improving team efficiency and onboarding.</li>
-                  </ul>
-                </div></td>
-              </tr>
-            </tbody></table>
-          </div>
+    <div class="experience-entry">
+      <h3>Technical Applications Engineer (DevOps / Platform – CI/CD & Automation)</h3>
+      <p class="company-date">Technology Concepts & Design Inc (TCDI) — Jul 2022 – Aug 2024</p>
+      <ul>
+        <li>Designed and automated CI/CD pipelines across Linux and Windows systems.</li>
+        <li>Built Ansible automation for configuration, patching, and inventory management.</li>
+        <li>Managed GitHub Enterprise, TeamCity, Artifactory/XRay, and SonarQube platforms.</li>
+        <li>Automated monitoring checks to improve operational reliability.</li>
+      </ul>
+    </div>
 
-          <!-- Aon -->
-          <div class="resume-item" id="aon">
-            <table>
-              <tbody><tr>
-                <td><span class="resume-position">Assistant Director of Development Operations</span></td>
-                <td class="resume-date-worked">May 2011-Jul 2022</td>
-              </tr>
-              <tr>
-                <td colspan="2"><span class="resume-company">Stroz Friedberg, an AON Company</span> | New York, NY</td>
-              </tr>
-              <tr>
-                <td colspan="2"><span class="resume-company-description">Stroz Friedberg is a full service investigation firm that develops data discovery software. It was acquired by TCDI on July 2022.</span></td>
-              </tr>
-              <tr>
-                <td colspan="2"><div class="resume-responsibilities">
-                  <ul>
-                    <li><span class="highlight">Led end-to-end test lifecycle management</span> for proprietory Win32 applications (Stroz Discovery and Nuix-X), improving defect resolution timelines.</li>
-                    <li><span class="highlight">Automated software validation processes</span> using Pytest and Selenium, enhancing reliability and deployment speed.</li>
-                    <li><span class="highlight">Delivered high-quality builds</span> through automated build systems such as Jenkins and TeamCity.</li>
-                    <li><span class="highlight">Developed custom MSI installers</span> for enterprise applications, ensuring seamless deployment across environments.</li>
-                    <li><span class="highlight">Integrated backend services with e-Discover tools</span> (Nuix, Relativity APIs) to enhance legal data processing workflows.</li>
-                  </ul>
-                </div></td>
-              </tr>
-            </tbody></table>
-          </div>
+    <div class="experience-entry">
+      <h3>Assistant Director of Development Operations (CI/CD & Automation)</h3>
+      <p class="company-date">Stroz Friedberg (AON) — May 2011 – Jul 2022</p>
+      <ul>
+        <li>Led enterprise CI/CD pipelines using Jenkins and TeamCity.</li>
+        <li>Automated builds, testing (Pytest, Selenium), and packaging workflows.</li>
+        <li>Built MSI installers and managed deployment artifacts for enterprise clients.</li>
+        <li>Standardized build and release processes across multiple product lines.</li>
+      </ul>
+    </div>
 
-          <!-- Blackstratus -->
-          <div class="resume-item" id="blackstratus">
-            <table>
-              <tbody><tr>
-                <td><div class="resume-position">Build Manager/Developer</div></td>
-                <td class="resume-date-worked">Feb 2009-Apr 2011</td>
-              </tr>
-              <tr>
-                <td colspan="2"><div class="resume-company">BlackStratus | Edison, NJ</div></td>
-              </tr>
-              <tr>
-                <td colspan="2"><div class="resume-company-description">BlackStratus (formerly NetForensics) developed enterprise-class Security Information and Event Management (SIEM) software.</div></td>
-              </tr>
-              <tr>
-                <td colspan="2"><div class="resume-responsibilities">
-                  <ul>
-                    <li><span class="highlight">Managed and enhanced</span> a custom automated build system utilizing Java and Apache Ant, ensuring efficient and reliable build processes.</li>
-                    <li><span class="highlight">Maintained and developed</span> the installation codebase for the nFX SIM One product using Advanced Installer and Java.</li>
-                    <li><span class="highlight">Created and deployed</span> patch updates for the nFX SIM One product, ensuring seamless functionality and user experience.</li>
-                  </ul>
-                </div></td>
-              </tr>
-            </tbody></table>
-          </div>
+    <div class="experience-entry">
+      <h3>Build Manager / Automation Engineer (CI/CD & Build Systems)</h3>
+      <p class="company-date">BlackStratus — Feb 2009 – Apr 2011</p>
+      <ul>
+        <li>Owned custom build and release automation platforms for enterprise SIEM software.</li>
+        <li>Automated build pipelines, patch creation, and release validation workflows.</li>
+      </ul>
+    </div>
 
-          <!-- Netgear -->
-          <div class="resume-item" id="netgear">
-            <table>
-              <tbody><tr>
-                <td><div class="resume-position">Advanced Development Engineer</div></td>
-                <td class="resume-date-worked">Aug 2006-Feb 2009</td>
-              </tr>
-              <tr>
-                <td colspan="2"><div class="resume-company">NETGEAR Incorporated | San Jose, CA</div></td>
-              </tr>
-              <tr>
-                <td colspan="2"><div class="resume-company-description">NETGEAR is a worldwide provider of networking products for the home and business.</div></td>
-              </tr>
-              <tr>
-                <td colspan="2"><div class="resume-responsibilities">
-                  <ul>
-                    <li><span class="highlight">Engineered firmware solutions</span> in an embedded Linux environment and <span class="highlight">created MSI installers</span> for Windows components.</li>
-                    <li><span class="highlight">Designed, implemented, and maintained</span> an automated build system to streamline development processes.</li>
-                    <li><span class="highlight">Oversaw and conducted</span> comprehensive internal and external testing to ensure product quality.</li>
-                    <li><span class="highlight">Collaborated with global support teams</span> to develop and enforce procedures aimed at preventing and eliminating defects in both new and existing products.</li>
-                  </ul>
-                </div></td>
-              </tr>
-            </tbody></table>
-          </div>
+    <div class="experience-entry">
+      <h3>Advanced Development Engineer (Platform / Embedded Systems Automation)</h3>
+      <p class="company-date">NETGEAR — Aug 2006 – Feb 2009</p>
+      <ul>
+        <li>Built automated firmware build pipelines for embedded Linux platforms.</li>
+        <li>Improved cross-platform CI workflows for Linux and Windows components.</li>
+      </ul>
+    </div>
 
-          <!-- Select Earlier Experience -->
-          <div class="resume-item" id="earlier-experience">
-            <table>
-              <tbody><tr>
-                <td><div class="resume-position">Various Technical &amp; Leadership Roles</div></td>
-                <td class="resume-date-worked">Apr 1990-Aug 2006</td>
-              </tr>
-              <tr>
-                <td colspan="2"><div class="resume-company">McAfee Software, SkipJam Corporation, and Helix Software</div></td>
-              </tr>
-              <tr>
-                <td colspan="2"><div class="resume-company-description">Progressed to senior software development and IT roles, designing and maintaining critical systems in early-stage technology companies.</div></td>
-              </tr>
-              <tr>
-                <td colspan="2"><div class="resume-responsibilities">
-                  <ul>
-                    <li>Designed and implemented CI/CD pipelines and automated build/test/deployment workflows using Jenkins and TeamCity, improving reliability, repeatability, and release velocity.</li>
-                    <li>Built enterprise software and automation tooling in C#, Java, and Python, supporting scalable, maintainable systems.</li>
-                    <li>Supported and stabilized production environments through hands-on infrastructure, systems administration, and operational automation, improving uptime and incident response.</li>
-                    <li>Led QA testing processes, ensuring high-quality software releases through automated and manual testing strategies.</li>
-                    <li>Developed Linux embedded systems for a network multimedia convergence device, combining voice, video, and data capabilities, and delivering reliable, end-to-end system functionality in a startup environment.</li>
-                  </ul>
-                </div></td>
-              </tr>
-            </tbody></table>
-          </div>
+    <div class="experience-entry">
+      <h3>Various Build / Automation & Embedded Roles</h3>
+      <p class="company-date">McAfee, SkipJam, Helix — Apr 1990 – Aug 2006</p>
+      <ul>
+        <li>Designed and maintained CI/CD and build automation systems.</li>
+        <li>Developed Linux embedded solutions for network multimedia convergence devices.</li>
+      </ul>
+    </div>
+  </section>
 
-        </section>
+  <!-- Home Lab / Projects -->
+  <section>
+    <h2>Home Lab & Platform Automation</h2>
+    <ul>
+      <li>Built a fully automated lab using Proxmox, Ansible, and Git workflows.</li>
+      <li>Designed CI pipelines for local and Azure-hosted VMs.</li>
+      <li>Applied Infrastructure as Code principles and tested hybrid connectivity.</li>
+    </ul>
+  </section>
 
-        <!-- Core Skills -->
-        <section class="resume" id="core-skills">
-        <h3>Core Skills</h3>
-          <ul>
-            <li><span class="highlight">Automation &amp; Monitoring:</span> Ansible, Rundeck, Jenkins, TeamCity, RESTful APIs, CI/CD, MSI</li>
-            <li><span class="highlight">Infrastructure &amp; Virtualization:</span> VMWare, Proxmox, Windows, Linux, Docker, Network Administration</li>
-            <li><span class="highlight">Security &amp; Compliance:</span> SIEM, PingID, PingFederate, SolarWinds, Disaster Recovery</li>
-            <li><span class="highlight">Scripting &amp; Development:</span> Python, Bash, Powershell, Java, C#, Git, GitHub, Jenkins, TeamCity</li>
-            <li><span class="highlight">Project Tools:</span> Jira, Confluence, YouTrack</li>
-            <li><span class="highlight">Soft Skills:</span> Documentation, Cross-functional Collaboration, Problem Solving, Communication</li>
-          </ul>
-        </section>
+  <!-- Education -->
+  <section>
+    <h2>Education</h2>
+    <p>Bachelor of Science in Computer Engineering — CUNY Brooklyn College, 1990</p>
+  </section>
 
-        <!-- Home Lab & Automation Portfolio -->
-        <section class="resume" id="homelab">
-          <h3>Home Lab &amp; Automation Portfolio</h3>
-          <ul>
-            <li>Built and maintain a fully-featured home lab using <span class="highlight">Proxmox</span> virtualization, Ubuntu VMs, and Docker — simulating production-grade infrastructure.</li>
-            <li>Provision infrastructure and applications via <span class="highlight">Ansible</span> and <span class="highlight">Terraform</span> (IaC), achieving reproducible, version-controlled deployments.</li>
-            <li>Automate CI/CD, testing, and deployment pipelines using <span class="highlight">GitHub Actions</span>, <span class="highlight">Jenkins</span>, and <span class="highlight">Semaphore</span>, including automated secret management.</li>
-            <li>Implement identity and access management using <span class="highlight">Microsoft Entra ID (Azure AD)</span> + Active Directory, standardizing SSO and centralized authentication for Linux and Windows hosts and services.</li>
-            <li>Design hybrid storage &amp; backup architecture: local SSDs, <span class="highlight">Ceph</span> cluster, iSCSI/NAS, NFS/Samba (TrueNAS), with VM snapshot backups via <span class="highlight">Proxmox Backup Server</span>.</li>
-            <li>Configure network services and reverse proxy infrastructure: redundant <span class="highlight">Pi‑Hole DNS</span> servers, layered firewall, and <span class="highlight">Nginx</span> reverse-proxy cluster with automated <span class="highlight">Let’s Encrypt</span> TLS certificates.</li>
-            <li>Deploy observability and monitoring stack using <span class="highlight">Prometheus</span> for metrics collection and <span class="highlight">Grafana</span> for dashboards, along with logging and alerting pipelines to track VM/container health, resource utilization, and service uptime.</li>
-            <li>Maintain full version-controlled documentation, architecture diagrams, and automation scripts to ensure reproducibility, auditability, and maintainability.</li>
-          </ul>
-        </section>
-
-        <!-- Education -->
-        <section class="resume" id="education">
-          <h3>Education</h3>
-          <div class="resume-education">
-            <table>
-              <tbody><tr>
-                <td>Bachelors of Science in Computer Engineering, CUNY Brooklyn College, 1990</td>
-              </tr>
-            </tbody></table>
-          </div>
-        </section>
-
-        <!-- Footer -->
-        <section class="footer" id="footer">
-          <div class="download">
-            <table>
-              <tbody>
-                <tr>
-                  <td><span class="last-updated">Last updated: January 08, 2026</span></td>
-                  <td><a href="https://homelabstore1.blob.core.windows.net/$web/Frank_Refol_Resume_latest.pdf">download</a></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td><a href="https://homelabstore1.blob.core.windows.net/$web/Frank_Refol_ats_latest.pdf">download (ATS-friendly)</a></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </main>
-  </div>
-  
-</body></html>
+</body>
+</html>
