@@ -32,9 +32,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-    #   # Step 4: Generate ATS-friendly resume HTML
-    #   - name: Generate ATS-friendly Resume HTML
-    #     run: python3 scripts/html_to_ats_resume.py
+      # Step 4: Generate ATS-friendly resume HTML
+      - name: Generate ATS-friendly Resume HTML
+        run: python3 scripts/html_to_ats_resume.py
 
       # Step 5: Generate PDF of standard resume and upload to Azure Storage
       - name: Generate and Upload PDF
