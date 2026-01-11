@@ -49,25 +49,6 @@ svg,
 }
 
 /* ===========================
-   Headings (screen scaling)
-   =========================== */
-
-h1 {
-  font-size: clamp(1.5rem, 4.5vw, 2.4rem);
-  line-height: 1.1;
-}
-
-h2 {
-  font-size: clamp(1.2rem, 3.5vw, 1.8rem);
-  line-height: 1.15;
-}
-
-h3 {
-  font-size: clamp(1rem, 3vw, 1.25rem);
-  line-height: 1.2;
-}
-
-/* ===========================
    Sections (visual only)
    =========================== */
 
@@ -157,11 +138,6 @@ section {
     color: #03477a;                   /* hover effect */
 }
 
-.contact .info table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
 .contact .info i {
   font-size: 20px;
   color: #0563bb;
@@ -178,22 +154,6 @@ section {
    Resume sections
    =========================== */
 
-.resume table {
-  font-weight: normal;
-  font-size: 12px;
-  border-collapse: collapse;
-  width: 100% ;
-  padding: 0%;
-  border-spacing: 2px;
-  border: 0px;
-  font-weight: 400;
-  /* These page-break properties are included to reduce awkward breaks when
-     the same HTML is rendered to PDF. They have no negative effect on screen
-     and help the print stylesheet (and converters) keep items together. */
-  page-break-inside: avoid;
-  page-break-after: auto;
-}
-
 .resume ul {
   padding-left: 20px;
 }
@@ -203,16 +163,23 @@ section {
   padding-left: 0px;
 }
 
-.resume .highlight {
+.resume strong {
   color: #022948; /* subtle blue */
   font-weight: bold;
   padding: 0 2px; /* small padding for readability */
 }
 
-.resume h3 {
+.resume h3 {  
   font-size: 16px;
   font-weight: bold;
   padding-top: 5px;
+}
+
+.resume h4 {  
+  font-size: 14px;
+  font-weight: bold;
+  padding-top: 0px;
+  margin-bottom: 1px;
 }
 
 .resume #resume-summary {
@@ -226,36 +193,44 @@ section {
 }
 
 .resume .resume-item {
-  margin-left: 5px;
+  margin-left: 0px;
 }
 
 .resume .resume-position {
   font-size: 14px;
   font-weight: bold;
   text-transform: uppercase;
-  text-align: left;
-}
-
-.resume .resume-date-worked {
-
-  text-align: right;
-  white-space: normal;
-  text-align: right;
+  padding-bottom: 0px;
+  margin-bottom: 1px;
 }
 
 .resume .resume-company {
   font-size:14px;
+  color: #0563bb;
   white-space: normal;
+  font-weight: bold;
+  padding-top: 0px;
 }
 
-.resume .resume-company a {
-  color: #0563bb;
-  font-weight: bold;
+.resume .resume-company-location {
+  font-size: 12px;
+  font-weight: normal;
+  color: #272829;
+  font-style: normal;
+}
+
+.resume .resume-date-worked {
+  font-size: 12px;
+  white-space: normal;
+  color: #000000;
+  font-weight: normal;
 }
 
 .resume .resume-company-description {
   font-size: 14px;
   font-style: italic;
+  margin-top: 2px;
+  margin-bottom: 0px;
 }
 
 /* ===========================
@@ -264,7 +239,7 @@ section {
 
 .resume-responsibilities {
   font-size: 12px;
-  margin-top: 6px;
+  margin-top: 0px;
 }
 
 /* ===========================
@@ -280,13 +255,7 @@ section {
 }
 
 .footer .download {
-  text-align: right;  
-}
-
-.footer table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
+  text-align: left;  
 }
 
 .footer td:first-child {
@@ -316,25 +285,6 @@ section {
     max-width: 100% !important;
     width: 100% !important;
     padding: 0 0.5rem !important;
-  }
-
-  /* Allow tables to scroll horizontally on small devices */
-  .resume table {
-    display: block;
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: auto !important;
-    table-layout: auto !important;
-  }
-
-  /* Rationale: allowing horizontal scroll preserves table contents and avoids
-     truncation on very narrow screens. We prefer scroll over forcing tiny
-     fonts, and the print stylesheet will use fixed table layout for PDF output. */
-
-  .resume table th,
-  .resume table td {
-    white-space: normal !important;
-    word-break: break-word !important;
   }
 
   /* Ensure company/date wrap */

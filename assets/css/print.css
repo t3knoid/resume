@@ -101,7 +101,7 @@ h3 {
 .contact .info .phone {
     font-size: 14px;
     font-weight: normal;
-    text-align: right;
+    text-align: left;
     margin-bottom: 4px;
     display: block; /* make sure hidden elements are shown */
 }
