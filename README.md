@@ -49,6 +49,25 @@ Example:
 - **Screen layout:** `assets/css/style.css`  
 - **Print/PDF layout:** `assets/css/print.css` (used by `htmtopdf.py`)
 
+### Download link obfuscation
+
+- **Why:** The footer "download" link in [index.html](index.html) is obfuscated to avoid exposing the direct blob URL in the visible markup.
+- **How it works:** The link uses a `data-resume` attribute containing the base64-encoded URL and a small inline JS decoder that decodes on click and navigates to the original PDF. The code is in `index.html` near the footer and before `</body>`.
+- **Generate/update encoded value:**
+
+```bash
+printf %s 'https://url/to/resume.pdf' | base64
+```
+
+- **To apply:** put the base64 string into the `data-resume` attribute (e.g. `data-resume="<base64>"`) and ensure the decoder script is present. Example link markup used here:
+
+```html
+<a href="#" id="download-resume" data-resume="<base64>">download</a>
+```
+
+- **To revert:** replace the anchor with a direct `href` to the PDF or remove the decoder script.
+- **Note:** This is light obfuscation for presentation purposes only — it is not a security mechanism. For stronger concealment or analytics, consider a shortlink, server-side redirect, or signed URL workflow.
+
 ---
 
 ## PDF Generation & Upload

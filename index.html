@@ -192,12 +192,27 @@
           <div class="download">
             <div class="last-updated">Last updated: January 12, 2026</div>
             <div class="download-links">
-              <a href="https://homelabstore1.blob.core.windows.net/$web/Frank_Refol_Resume_latest.pdf">download</a>
+              <a href="#" id="download-resume" data-resume="aHR0cHM6Ly9ob21lbGFic3RvcmUxLnoxMy53ZWIuY29yZS53aW5kb3dzLm5ldC9GcmFua19SZWZvbF9SZXN1bWVfbGF0ZXN0LnBkZg==">download</a>
             </div>
           </div>
         </section>
       </main>
   </div>
   
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var el = document.getElementById('download-resume');
+      if (!el) return;
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        try {
+          var url = atob(this.dataset.resume);
+          window.location.href = url;
+        } catch (err) {
+          console.error('Failed to decode URL', err);
+        }
+      });
+    });
+  </script>
 
 </body></html>
