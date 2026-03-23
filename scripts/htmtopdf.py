@@ -72,7 +72,7 @@ def write_github_outputs(pdf_name: str, latest_uploaded: bool = True, latest_nam
                 gh.write(f"latest_pdf={latest_name}\n")
 
 
-def parse_args():
+def parse_args(argv=None):
     parser = argparse.ArgumentParser(description='Generate resume PDF and optionally upload to Azure blob',add_help=True)
 
     parser.add_argument(
@@ -91,10 +91,10 @@ def parse_args():
         default='Resume', 
         help="Suffix for generated filename (default: 'Resume')")
    
-    return parser.parse_args()
+    return parser.parse_args(argv)
 
 def main(argv: Optional[list] = None) -> int:
-    args = parse_args()
+    args = parse_args(argv)
 
     now = datetime.datetime.now()
     date_string = now.strftime('%Y%m%d')
