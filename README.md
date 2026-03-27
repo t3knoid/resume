@@ -10,6 +10,38 @@ The HTML served on the website (`index.html`) is already ATS‑friendly and desi
 
 ---
 
+## Repository Requirements
+
+Use this section as the single source of truth for local prerequisites.
+
+### Required
+
+- **Git** (for clone/commit workflows and hooks)
+- **Node.js** (includes `npm` and usually `npx`)
+  - Used for HTML validation (`html-validate`) and Lighthouse CLI
+- **Python 3** (for PDF/ATS tooling scripts)
+- **Python dependencies** from `requirements.txt`
+
+### Optional (feature-specific)
+
+- **Google Chrome/Chromium** for Lighthouse audits (`--chrome-flags="--headless"`)
+- **Azure Blob Storage credentials** for upload workflows:
+  - `AZURE_STORAGE_CONNECTION_STRING`
+  - `AZURE_STORAGE_CONTAINER` (default `$web`)
+
+### Quick verification
+
+```bash
+git --version
+node -v
+npm -v
+npx -v || npm exec --yes html-validate --version
+python3 --version
+python3 -m pip install -r requirements.txt
+```
+
+---
+
 ## Resume HTML Structure
 
 The résumé is written using semantic HTML to ensure clarity, accessibility, and ATS compatibility. Each work experience entry follows a consistent structure that includes:
@@ -165,19 +197,8 @@ index.html → htmtopdf.py → timestamped + latest PDFs → Azure Blob Storage
 
 ## Evaluating the Resume Page
 
-Use **Google Lighthouse** to audit performance, accessibility, best practices, and SEO. This requires installation of Chromium and Node.js.
-
-**`npx` is bundled with Node.js**.  
-
-```bash
-brew update
-brew install node
-```
-
-**Chromium**
-```bash
-rew install --cask google-chrome
-```
+Use **Google Lighthouse** to audit performance, accessibility, best practices, and SEO.
+See [Repository Requirements](#repository-requirements) for prerequisites.
 
 ### Running a Local audit
 
@@ -198,6 +219,30 @@ npx -y lighthouse http://localhost:8000/index.html \
 ```
 
 Open `lighthouse-report.html` to review results.
+
+## Pre-Commit HTML Validation
+
+This repository includes a native Git pre-commit hook at `.githooks/pre-commit` that validates `index.html` before each commit.
+See [Repository Requirements](#repository-requirements) for prerequisites.
+
+Setup:
+
+```bash
+git config core.hooksPath .githooks
+chmod +x .githooks/pre-commit
+```
+
+Run the same validation manually:
+
+```bash
+npx --yes html-validate index.html
+```
+
+If `npx` is unavailable in your environment, use:
+
+```bash
+npm exec --yes html-validate index.html
+```
 
 ---
 
