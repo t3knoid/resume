@@ -232,6 +232,18 @@ git config core.hooksPath .githooks
 chmod +x .githooks/pre-commit
 ```
 
+Windows (PowerShell):
+
+```powershell
+git config core.hooksPath .githooks
+```
+
+If you use Git Bash on Windows, you can also run:
+
+```bash
+chmod +x .githooks/pre-commit
+```
+
 Run the same validation manually:
 
 ```bash
