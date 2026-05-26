@@ -11,8 +11,20 @@ on:
       - '.vscode/**'
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
 
     steps:
@@ -69,3 +81,23 @@ jobs:
             git commit -m "Update robots.txt, index.html"
             git push
           fi
+
+      # Step 7: Prepare and deploy GitHub Pages artifact
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Prepare Pages artifact
+        run: |
+          mkdir -p dist
+          find . -maxdepth 1 -type f -name '*.html' -exec cp {} dist/ \;
+          cp robots.txt dist/
+          cp -R assets dist/assets
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
