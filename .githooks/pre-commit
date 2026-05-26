@@ -1,0 +1,43 @@
+#!/usr/bin/env sh
+set -eu
+
+# VS Code SCM and other GUI clients may run hooks with a minimal PATH.
+PATH="/opt/homebrew/bin:/usr/local/bin:/c/Program Files/nodejs:/c/Program Files (x86)/nodejs:$PATH"
+
+# Include nvm-windows locations when present.
+if [ -n "${NVM_SYMLINK:-}" ]; then
+	PATH="$NVM_SYMLINK:$PATH"
+fi
+if [ -n "${NVM_HOME:-}" ]; then
+	PATH="$NVM_HOME:$PATH"
+fi
+
+# If Node isn't immediately available, try loading nvm.
+if ! command -v node >/dev/null 2>&1; then
+	NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+	if [ -s "$NVM_DIR/nvm.sh" ]; then
+		. "$NVM_DIR/nvm.sh" >/dev/null 2>&1 || true
+		nvm use --silent default >/dev/null 2>&1 || true
+	fi
+fi
+
+# Validate the main resume HTML before allowing a commit.
+if ! command -v node >/dev/null 2>&1; then
+	echo "ERROR: Node.js is required for pre-commit HTML validation." >&2
+	echo "On Windows, ensure Node is installed and available to Git/VS Code (not only an interactive shell)." >&2
+	echo "Install Node.js, then retry commit." >&2
+	echo "Bypass once (not recommended): git commit --no-verify" >&2
+	exit 1
+fi
+
+if command -v npx >/dev/null 2>&1; then
+	echo "Running HTML validation for index.html (npx)..."
+	npx --yes html-validate index.html
+elif command -v npm >/dev/null 2>&1; then
+	echo "Running HTML validation for index.html (npm exec)..."
+	npm exec --yes html-validate index.html
+else
+	echo "ERROR: npm/npx not found. Install a full Node.js distribution." >&2
+	echo "Bypass once (not recommended): git commit --no-verify" >&2
+	exit 1
+fi
