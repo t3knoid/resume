@@ -30,6 +30,7 @@ Use this section as the single source of truth for local prerequisites.
   - `AZURE_STORAGE_CONNECTION_STRING`
   - `AZURE_STORAGE_CONTAINER` (default `$web`)
   - `RESUME_PDF_TOKEN` (optional; secret token added to PDF file names)
+  - `RESUME_EMAIL`, `RESUME_PHONE` (contact details added to the PDF only)
 
 ### Quick verification
 
@@ -113,6 +114,7 @@ PDFs are generated from `index.html` using `htmtopdf.py` and uploaded to Azure B
 - **Hosting:** Azure Blob Storage static website (`$web` container)
 - **Download behavior:** PDFs are uploaded with `Content-Disposition: attachment; filename="Frank_Refol_Resume.pdf"`, so browsers save the file (with a clean name) instead of opening it inline.
 - **robots.txt:** each upload also writes a `robots.txt` (`Disallow: /`) to the root of the static website so crawlers skip the PDFs.
+- **Contact details (PDF only):** email and phone are **not** in `index.html`. The script reads them from `RESUME_EMAIL` and `RESUME_PHONE` and adds them to an in-memory copy of the page that is rendered to PDF. `index.html` on disk never gets them. If either variable is missing, the script prints a warning and the PDF omits that field.
 
 ### File names
 
@@ -136,6 +138,8 @@ PDFs are generated from `index.html` using `htmtopdf.py` and uploaded to Azure B
 - `AZURE_STORAGE_CONNECTION_STRING` — required for uploads  
 - `AZURE_STORAGE_CONTAINER` — target container (default `$web`)  
 - `RESUME_PDF_TOKEN` — optional secret token added to PDF file names so their URLs can't be guessed  
+- `RESUME_EMAIL` — email address shown in the PDF (not on the website)  
+- `RESUME_PHONE` — phone number shown in the PDF (not on the website)  
 
 ### Recommended local workflow
 
@@ -206,6 +210,7 @@ Required secrets:
 - `AZURE_STORAGE_CONNECTION_STRING`  
 - `AZURE_STORAGE_CONTAINER`  
 - `RESUME_PDF_TOKEN` (recommended; without it the PDF names are predictable)
+- `RESUME_EMAIL` and `RESUME_PHONE` (without them the PDF has no email/phone)
 
 Pipeline flow:
 
@@ -218,7 +223,7 @@ index.html → htmtopdf.py → timestamped + latest PDFs → Azure Blob Storage
 
 ## Keeping the PDF out of search engines
 
-The PDF contains contact details that aren't shown on the web page, so it should not be indexed. Several layers keep it out:
+The PDF contains contact details (email, phone) that aren't on the web page or in this repository; they come from GitHub secrets at build time. So the PDF should not be indexed. Several layers keep it out:
 
 1. **Unguessable names:** `RESUME_PDF_TOKEN` is added to the file names.
 2. **No public links:** the site link is base64-obfuscated, and the URL is not linked from this README.
@@ -316,11 +321,11 @@ However, some systems prefer extremely plain formatting. For those cases, the re
 
 The script `scripts/html_to_ats_resume.py` can generate a simplified HTML version by:
 
-- Extracting contact info, summary, work experience, skills, and education  
+- Extracting contact info, summary, work experience, skills, and education (email and phone come from `RESUME_EMAIL` / `RESUME_PHONE`, since they aren't in `index.html`)  
 - Converting tables and nested layout elements into plain headings, paragraphs, and lists  
 - Producing a minimal HTML file suitable for conversion into a plain PDF
 
-This step is **optional** and not used by the live website.
+This step is **optional** and not used by the live website. `resume_ats.html` contains your contact details, so it is git-ignored and excluded from the GitHub Pages deploy. Don't commit it.
 
 ### Manual usage
 

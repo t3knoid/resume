@@ -1,5 +1,6 @@
 import argparse
 from bs4 import BeautifulSoup, NavigableString
+import os
 import re
 
 DEFAULT_INPUT = "index.html"
@@ -57,8 +58,9 @@ def main():
     header = ats.new_tag("header")
     name = soup.select_one(".name")
     title_role = soup.select_one(".title")
-    email = soup.select_one(".email")
-    phone = soup.select_one(".phone")
+    # Contact details aren't in the public index.html; take them from the environment.
+    email = os.environ.get("RESUME_EMAIL", "").strip()
+    phone = os.environ.get("RESUME_PHONE", "").strip()
     url = soup.select_one(".url a")
 
     h1 = ats.new_tag("h1")
@@ -71,13 +73,13 @@ def main():
     p.append(NavigableString(clean_text(title_role.get_text())))
     p.append(ats.new_tag("br"))
 
-    # Add email
-    p.append(NavigableString(f"Email: {clean_text(email.get_text())}"))
-    p.append(ats.new_tag("br"))
-
-    # Add phone
-    p.append(NavigableString(f"Phone: {clean_text(phone.get_text())}"))
-    p.append(ats.new_tag("br"))
+    # Add email/phone when provided
+    if email:
+        p.append(NavigableString(f"Email: {email}"))
+        p.append(ats.new_tag("br"))
+    if phone:
+        p.append(NavigableString(f"Phone: {phone}"))
+        p.append(ats.new_tag("br"))
 
     portfolio_url = url['href'] if url else "N/A"
 

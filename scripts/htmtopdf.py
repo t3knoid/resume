@@ -3,6 +3,7 @@ import os
 import sys
 import base64
 import posixpath
+import copy
 import argparse
 import datetime
 from typing import Optional
@@ -60,8 +61,35 @@ def update_download_link(soup: BeautifulSoup, blob_name: str) -> bool:
     return True
 
 
-def generate_pdf(html_path: str, pdf_path: str) -> None:
-    HTML(html_path).write_pdf(pdf_path)
+def contact_from_env() -> dict:
+    """Private contact details for the PDF, kept out of the public index.html."""
+    return {
+        'email': os.environ.get('RESUME_EMAIL', '').strip(),
+        'phone': os.environ.get('RESUME_PHONE', '').strip(),
+    }
+
+
+def inject_contact(soup: BeautifulSoup, contact: dict) -> BeautifulSoup:
+    """Return a copy of soup with email/phone added to the contact block."""
+    pdf_soup = copy.copy(soup)
+    address = pdf_soup.find('address', class_='contact-info')
+    if not address:
+        return pdf_soup
+    for cls in ('email', 'phone'):
+        if contact.get(cls) and not address.find(class_=cls):
+            div = pdf_soup.new_tag('div', attrs={'class': cls})
+            div.string = contact[cls]
+            address.append(div)
+    return pdf_soup
+
+
+def generate_pdf(html_path: str, pdf_path: str, html_string: Optional[str] = None) -> None:
+    if html_string is None:
+        HTML(html_path).write_pdf(pdf_path)
+    else:
+        # base_url keeps relative links (assets/css/print.css) resolving as they would from the file
+        base_url = os.path.dirname(os.path.abspath(html_path)) + os.sep
+        HTML(string=html_string, base_url=base_url).write_pdf(pdf_path)
 
 
 # Served at the root of the Azure static website so crawlers skip the PDFs.
@@ -166,16 +194,22 @@ def main(argv: Optional[list] = None) -> int:
             print(f'Pointed download link at {latest_blob_name}')
         if changed:
             write_html(html_file, str(soup))
+        # Contact details go only into the PDF; index.html is never written with them.
+        contact = contact_from_env()
+        missing = [k for k, v in contact.items() if not v]
+        if missing:
+            print(f"Warning: RESUME_{'/RESUME_'.join(m.upper() for m in missing)} not set; PDF will omit it.")
+        pdf_html = str(inject_contact(soup, contact))
     except Exception as e:
         print(f'Error updating HTML: {e}')
         return 1
 
     try:
-        generate_pdf(html_file, resume_pdf_file)
+        generate_pdf(html_file, resume_pdf_file, pdf_html)
         print(f'Generated PDF: {resume_pdf_file}')
         # If requested, also generate a "latest" PDF with the ats_latest suffix
         if upload_latest and latest_pdf_file:
-            generate_pdf(html_file, latest_pdf_file)
+            generate_pdf(html_file, latest_pdf_file, pdf_html)
             print(f'Generated latest PDF: {latest_pdf_file}')
     except Exception as e:
         print(f'Error generating PDF: {e}')

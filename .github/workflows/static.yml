@@ -31,7 +31,7 @@ jobs:
       - name: Prepare Pages artifact
         run: |
           mkdir -p dist
-          find . -maxdepth 1 -type f -name '*.html' -exec cp {} dist/ \;
+          find . -maxdepth 1 -type f -name '*.html' ! -name 'resume_ats.html' -exec cp {} dist/ \;
           cp robots.txt dist/
           cp -R assets dist/assets
       - name: Upload artifact

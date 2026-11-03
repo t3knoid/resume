@@ -51,6 +51,8 @@ jobs:
           AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
           AZURE_STORAGE_CONTAINER: ${{ secrets.AZURE_STORAGE_CONTAINER }}
           RESUME_PDF_TOKEN: ${{ secrets.RESUME_PDF_TOKEN }}
+          RESUME_EMAIL: ${{ secrets.RESUME_EMAIL }}
+          RESUME_PHONE: ${{ secrets.RESUME_PHONE }}
         run: python3 scripts/htmtopdf.py
 
       # Step 5: Commit and push index.html changes (last-updated date, download link)
@@ -75,7 +77,7 @@ jobs:
       - name: Prepare Pages artifact
         run: |
           mkdir -p dist
-          find . -maxdepth 1 -type f -name '*.html' -exec cp {} dist/ \;
+          find . -maxdepth 1 -type f -name '*.html' ! -name 'resume_ats.html' -exec cp {} dist/ \;
           cp robots.txt dist/
           cp -R assets dist/assets
 
