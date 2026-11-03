@@ -1,6 +1,8 @@
 from html import parser
 import os
 import sys
+import base64
+import posixpath
 import argparse
 import datetime
 from typing import Optional
@@ -45,22 +47,48 @@ def update_last_updated(soup: BeautifulSoup, now: datetime.datetime) -> bool:
     return True
 
 
+def update_download_link(soup: BeautifulSoup, blob_name: str) -> bool:
+    """Point the obfuscated download link at blob_name, keeping its base URL."""
+    link = soup.find(id='download-resume')
+    if not link or not link.get('data-resume'):
+        return False
+    current = base64.b64decode(link['data-resume']).decode('utf-8')
+    new_url = posixpath.join(posixpath.dirname(current), blob_name)
+    if new_url == current:
+        return False
+    link['data-resume'] = base64.b64encode(new_url.encode('utf-8')).decode('ascii')
+    return True
+
+
 def generate_pdf(html_path: str, pdf_path: str) -> None:
     HTML(html_path).write_pdf(pdf_path)
 
 
-def upload_to_azure(connection_string: str, container_name: str, pdf_path: str, upload_latest: bool = True, latest_file_path: str = None, latest_blob_name: str = None) -> None:
+# Served at the root of the Azure static website so crawlers skip the PDFs.
+AZURE_ROBOTS_TXT = "User-agent: *\nDisallow: /\n"
+
+
+def pdf_content_settings(download_name: str) -> ContentSettings:
+    # Make browsers save the file (with a clean name) instead of opening it inline.
+    return ContentSettings(content_type='application/pdf',
+                           content_disposition=f'attachment; filename="{download_name}"')
+
+
+def upload_to_azure(connection_string: str, container_name: str, pdf_path: str, upload_latest: bool = True, latest_file_path: str = None, latest_blob_name: str = None, download_name: str = 'Resume.pdf') -> None:
     blob_service_client = BlobServiceClient.from_connection_string(connection_string)
     container_client = blob_service_client.get_container_client(container_name)
+    # robots.txt must live on the same host as the PDFs for crawlers to honor it
+    container_client.upload_blob(name='robots.txt', data=AZURE_ROBOTS_TXT.encode('utf-8'), overwrite=True,
+                                 content_settings=ContentSettings(content_type='text/plain'))
     # upload dated PDF
     with open(pdf_path, 'rb') as data:
         container_client.upload_blob(name=os.path.basename(pdf_path), data=data, overwrite=True,
-                                     content_settings=ContentSettings(content_type='application/pdf'))
+                                     content_settings=pdf_content_settings(download_name))
     # upload latest if requested (using a separate latest file)
     if upload_latest and latest_file_path and latest_blob_name:
         with open(latest_file_path, 'rb') as data:
             container_client.upload_blob(name=latest_blob_name, data=data, overwrite=True,
-                                         content_settings=ContentSettings(content_type='application/pdf'))
+                                         content_settings=pdf_content_settings(download_name))
 
 
 def write_github_outputs(pdf_name: str, latest_uploaded: bool = True, latest_name: str = None) -> None:
@@ -106,15 +134,21 @@ def main(argv: Optional[list] = None) -> int:
         base, ext = os.path.splitext(name)
         return name if ext.lower() == '.pdf' else f"{name}.pdf"
 
+    # A secret token in the blob names keeps the PDF URLs unguessable.
+    # Set RESUME_PDF_TOKEN (a GitHub secret) to enable it.
+    token = os.environ.get('RESUME_PDF_TOKEN', '').strip()
+    token_part = f"_{token}" if token else ''
+    download_name = f"Frank_Refol_{suffix}.pdf"
+
     if args.out:
         # ensure user-provided name has .pdf extension
         resume_pdf_file = ensure_pdf_extension(args.out)
         base = os.path.splitext(os.path.basename(resume_pdf_file))[0]
         latest_pdf_file = f"{base}_latest.pdf"
     else:
-        resume_pdf_file = f"Frank_Refol_{suffix}_{date_string}.pdf"
+        resume_pdf_file = f"Frank_Refol_{suffix}_{date_string}{token_part}.pdf"
         # Use the configured suffix for the "latest" filename as well
-        latest_pdf_file = f"Frank_Refol_{suffix}_latest.pdf"
+        latest_pdf_file = f"Frank_Refol_{suffix}_latest{token_part}.pdf"
 
     latest_blob_name = os.path.basename(latest_pdf_file)
     upload_latest = True
@@ -124,10 +158,14 @@ def main(argv: Optional[list] = None) -> int:
         soup = parse_html(html)
         changed = update_last_updated(soup, now)
         if changed:
-            write_html(html_file, str(soup))
             print(f'Updated last-updated date in {html_file}')
         else:
             print('No footer/last-updated tag found or updated.')
+        if update_download_link(soup, latest_blob_name):
+            changed = True
+            print(f'Pointed download link at {latest_blob_name}')
+        if changed:
+            write_html(html_file, str(soup))
     except Exception as e:
         print(f'Error updating HTML: {e}')
         return 1
@@ -155,7 +193,7 @@ def main(argv: Optional[list] = None) -> int:
         return 0
 
     try:
-        upload_to_azure(conn, container, resume_pdf_file, upload_latest=upload_latest, latest_file_path=latest_pdf_file, latest_blob_name=latest_blob_name)
+        upload_to_azure(conn, container, resume_pdf_file, upload_latest=upload_latest, latest_file_path=latest_pdf_file, latest_blob_name=latest_blob_name, download_name=download_name)
         print(f"Uploaded {resume_pdf_file} to container {container}")
         if upload_latest:
             print(f"Uploaded latest as {latest_blob_name}")

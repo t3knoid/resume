@@ -50,39 +50,25 @@ jobs:
         env:
           AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
           AZURE_STORAGE_CONTAINER: ${{ secrets.AZURE_STORAGE_CONTAINER }}
+          RESUME_PDF_TOKEN: ${{ secrets.RESUME_PDF_TOKEN }}
         run: python3 scripts/htmtopdf.py
 
-      # Step 5: Update robots.txt
-      - name: Update robots.txt
-        run: |
-          dated="${{ steps.pdfgen.outputs.dated_pdf }}"
-          latest="${{ steps.pdfgen.outputs.latest_pdf }}"
-
-          echo "Updating robots.txt with:"
-          echo "  $dated"
-          echo "  $latest"
-
-          # Create or update robots.txt to disallow crawlers from indexing dated and latest PDFs    
-          echo "User-Agent: *" > robots.txt
-          echo "Disallow: /$dated" >> robots.txt
-          echo "Disallow: /$latest" >> robots.txt
-
-      # Step 6: Commit and push changes to robots.txt, index.html
-      - name: Commit and Push robots.txt, index.html changes
+      # Step 5: Commit and push index.html changes (last-updated date, download link)
+      - name: Commit and Push index.html changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add robots.txt index.html
+          git add index.html
 
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "Update robots.txt, index.html"
+            git commit -m "Update index.html"
             git push
           fi
 
-      # Step 7: Prepare and deploy GitHub Pages artifact
+      # Step 6: Prepare and deploy GitHub Pages artifact
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

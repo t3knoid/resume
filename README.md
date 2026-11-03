@@ -3,8 +3,9 @@
 This repository contains the source for my résumé website, built with clean, semantic HTML/CSS and published through GitHub Pages. It also includes tooling to generate **print‑optimized PDFs**, with automated upload to Azure Blob Storage for hosting.
 
 - **Live résumé:** https://resume.refol.us  
-- Download the latest PDF version:  
-[![Resume PDF](https://img.shields.io/badge/View%20Resume-PDF-blue?style=flat&logo=adobe)](https://homelabstore1.blob.core.windows.net/$web/Frank_Refol_Resume_latest.pdf)  
+- **PDF version:** use the **download** link in the footer of the live résumé.
+
+> The PDF URL is deliberately not linked here. The PDF contains contact details, and any public link to it (including this README) lets search engines find and index it. See [Keeping the PDF out of search engines](#keeping-the-pdf-out-of-search-engines).
 
 The HTML served on the website (`index.html`) is already ATS‑friendly and designed for reliable parsing by applicant‑tracking systems.
 
@@ -28,6 +29,7 @@ Use this section as the single source of truth for local prerequisites.
 - **Azure Blob Storage credentials** for upload workflows:
   - `AZURE_STORAGE_CONNECTION_STRING`
   - `AZURE_STORAGE_CONTAINER` (default `$web`)
+  - `RESUME_PDF_TOKEN` (optional; secret token added to PDF file names)
 
 ### Quick verification
 
@@ -83,9 +85,10 @@ Example:
 
 ### Download link obfuscation
 
-- **Why:** The footer "download" link in [index.html](index.html) is obfuscated to avoid exposing the direct blob URL in the visible markup.
+- **Why:** The footer "download" link in [index.html](index.html) is obfuscated so the direct blob URL doesn't appear in the markup, where crawlers could follow it.
 - **How it works:** The link uses a `data-resume` attribute containing the base64-encoded URL and a small inline JS decoder that decodes on click and navigates to the original PDF. The code is in `index.html` near the footer and before `</body>`.
-- **Generate/update encoded value:**
+- **Updated automatically:** `htmtopdf.py` rewrites `data-resume` to point at the current "latest" PDF name (which includes `RESUME_PDF_TOKEN` when set), keeping the existing base URL. The workflow commits the change.
+- **Generate/update encoded value manually:**
 
 ```bash
 printf %s 'https://url/to/resume.pdf' | base64
@@ -107,7 +110,16 @@ printf %s 'https://url/to/resume.pdf' | base64
 PDFs are generated from `index.html` using `htmtopdf.py` and uploaded to Azure Blob Storage.
 
 - **Renderer:** WeasyPrint (modern CSS → PDF)  
-- **Hosting:** Azure Blob Storage (`$web` container recommended)
+- **Hosting:** Azure Blob Storage static website (`$web` container)
+- **Download behavior:** PDFs are uploaded with `Content-Disposition: attachment; filename="Frank_Refol_Resume.pdf"`, so browsers save the file (with a clean name) instead of opening it inline.
+- **robots.txt:** each upload also writes a `robots.txt` (`Disallow: /`) to the root of the static website so crawlers skip the PDFs.
+
+### File names
+
+| File | Without token | With `RESUME_PDF_TOKEN` |
+| ---- | ------------- | ----------------------- |
+| Dated | `Frank_Refol_Resume_YYYYMMDD.pdf` | `Frank_Refol_Resume_YYYYMMDD_<token>.pdf` |
+| Latest | `Frank_Refol_Resume_latest.pdf` | `Frank_Refol_Resume_latest_<token>.pdf` |
 
 ### CLI options
 
@@ -115,7 +127,7 @@ PDFs are generated from `index.html` using `htmtopdf.py` and uploaded to Azure B
 | ------------------ | ---------------------------------------------------------------- |
 | `--no-upload`      | Skip Azure upload (local testing)                                |
 | `--html <path>`    | Use an alternate HTML input file (default: `index.html`)         |
-| `--out <file>`     | Output filename (default: `Frank_Refol_Resume_YYYYMMDD.pdf`)     |
+| `--out <file>`     | Output filename (default: see [File names](#file-names); token not applied) |
 | `--suffix <value>` | Add a filename suffix (e.g., `ats`)                              |
 
 ### Environment variables
@@ -123,6 +135,7 @@ PDFs are generated from `index.html` using `htmtopdf.py` and uploaded to Azure B
 - `SKIP_UPLOAD=1` — same as `--no-upload`  
 - `AZURE_STORAGE_CONNECTION_STRING` — required for uploads  
 - `AZURE_STORAGE_CONTAINER` — target container (default `$web`)  
+- `RESUME_PDF_TOKEN` — optional secret token added to PDF file names so their URLs can't be guessed  
 
 ### Recommended local workflow
 
@@ -132,7 +145,7 @@ python -m venv $env:VENV
 & $env:VENV\Scripts\Activate.ps1
 pip install -r requirements.txt
 
-python htmtopdf.py --no-upload
+python scripts/htmtopdf.py --no-upload
 ```
 
 - Confirm the timestamped PDF output  
@@ -165,12 +178,16 @@ $env:AZURE_STORAGE_CONTAINER="$web"
 3. **Generate and upload**
 
 ```bash
-python3 htmtopdf.py
+python3 scripts/htmtopdf.py
 ```
 
-- Produces timestamped PDFs  
-- Updates the HTML footer with the latest PDF URL  
-- Uploads PDFs to Azure Blob Storage  
+- Produces timestamped and "latest" PDFs  
+- Updates the footer "last updated" date and the download link in `index.html`  
+- Uploads the PDFs and `robots.txt` to Azure Blob Storage  
+
+4. **Make the `$web` container private** (recommended)  
+   Azure Portal → Storage Account → Containers → `$web` → Change access level → **Private**.  
+   The static website endpoint (`*.web.core.windows.net`) keeps serving files, but the blob endpoint (`*.blob.core.windows.net/$web/...`) stops doing so. That matters because the `robots.txt` above covers only the static website host.
 
 ---
 
@@ -180,18 +197,50 @@ The automated workflow:
 
 - Runs on push to `main` or manual dispatch  
 - Generates both timestamped and “latest” PDFs  
-- Uploads them to Azure Blob Storage  
+- Uploads them, plus `robots.txt`, to Azure Blob Storage  
+- Commits the updated `index.html` (last-updated date, download link)  
+- Deploys the site to GitHub Pages  
 
 Required secrets:
 
 - `AZURE_STORAGE_CONNECTION_STRING`  
 - `AZURE_STORAGE_CONTAINER`  
+- `RESUME_PDF_TOKEN` (recommended; without it the PDF names are predictable)
 
 Pipeline flow:
 
 ```
 index.html → htmtopdf.py → timestamped + latest PDFs → Azure Blob Storage
+                         → updated index.html → commit → GitHub Pages
 ```
+
+---
+
+## Keeping the PDF out of search engines
+
+The PDF contains contact details that aren't shown on the web page, so it should not be indexed. Several layers keep it out:
+
+1. **Unguessable names:** `RESUME_PDF_TOKEN` is added to the file names.
+2. **No public links:** the site link is base64-obfuscated, and the URL is not linked from this README.
+3. **robots.txt on the PDF host:** uploaded to the static website root on every run. (The `robots.txt` in this repo applies only to the GitHub Pages domain, not to Azure.)
+4. **Private `$web` container:** closes the blob endpoint, which robots.txt can't cover (see [Azure Setup](#azure-setup)).
+
+`Content-Disposition: attachment` only affects browsers. It does **not** stop indexing.
+
+### Removing a PDF that is already indexed
+
+1. Generate a token (`python -c "import secrets; print(secrets.token_hex(8))"`) and save it as the `RESUME_PDF_TOKEN` repository secret.
+2. Delete the old, predictable blobs **before** pushing, because the pattern would also match the new files:
+
+   ```bash
+   az storage blob delete-batch --source '$web' --pattern 'Frank_Refol_Resume_*.pdf' \
+     --connection-string "$AZURE_STORAGE_CONNECTION_STRING" --dryrun   # drop --dryrun to delete
+   ```
+
+3. Push to `main` so the workflow uploads the new PDFs and updates the link.
+4. Once the old URL returns 404, submit it to Google's [Remove Outdated Content](https://search.google.com/search-console/remove-outdated-content) tool.
+
+To rotate the token later, change the secret, delete the old tokened blobs, and push.
 
 ---
 
