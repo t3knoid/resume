@@ -229,7 +229,7 @@ The PDF contains contact details that aren't shown on the web page, so it should
 
 ### Removing a PDF that is already indexed
 
-1. Generate a token (`python -c "import secrets; print(secrets.token_hex(8))"`) and save it as the `RESUME_PDF_TOKEN` repository secret.
+1. Generate a token (`python -c "import secrets; print(secrets.token_hex(8))"`) and save it as the `RESUME_PDF_TOKEN` repository secret.= (Settings → Secrets and variables → Actions).
 2. Delete the old, predictable blobs **before** pushing, because the pattern would also match the new files:
 
    ```bash
