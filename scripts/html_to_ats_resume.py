@@ -61,7 +61,7 @@ def main():
     # Contact details aren't in the public index.html; take them from the environment.
     email = os.environ.get("RESUME_EMAIL", "").strip()
     phone = os.environ.get("RESUME_PHONE", "").strip()
-    url = soup.select_one(".url a")
+    links = soup.select(".contact-info .url a")
 
     h1 = ats.new_tag("h1")
     h1.string = clean_text(name.get_text())
@@ -81,13 +81,13 @@ def main():
         p.append(NavigableString(f"Phone: {phone}"))
         p.append(ats.new_tag("br"))
 
-    portfolio_url = url['href'] if url else "N/A"
-
-    # Add clickable portfolio link
-    a_tag = ats.new_tag("a", href=portfolio_url)
-    a_tag.string = portfolio_url
-    p.append(NavigableString("Portfolio: "))
-    p.append(a_tag)
+    # Add each profile link (LinkedIn, GitHub, portfolio) as a full, clickable URL
+    for i, link in enumerate(links):
+        if i:
+            p.append(NavigableString(" | "))
+        a_tag = ats.new_tag("a", href=link['href'])
+        a_tag.string = link['href']
+        p.append(a_tag)
     header.append(p)
     body.append(header)
 
@@ -112,7 +112,7 @@ def main():
 
     for item in soup.select(".resume-item"):
         position = item.select_one(".resume-position")
-        date = item.select_one(".resume-date-worked")
+        dates = item.select(".resume-date-worked")
         company = item.select_one(".resume-company")
         desc = item.select_one(".resume-company-description")
         responsibilities = item.select_one(".resume-responsibilities")
@@ -124,13 +124,20 @@ def main():
         h3.string = clean_text(position.get_text())
         work_section.append(h3)
 
+        official = item.select_one(".resume-official-title")
+        if official:
+            o = ats.new_tag("p")
+            o.string = clean_text(official.get_text())
+            work_section.append(o)
+
         p = ats.new_tag("p")
         meta = []
         if company:
             meta.append(clean_text(company.get_text()))
-        if date:
-            meta.append(clean_text(date.get_text()))
-        p.string = " – ".join(meta)
+        if dates:
+            # Start and end dates, e.g. "Jul 2022 – Aug 2024"
+            meta.append(" – ".join(clean_text(d.get_text()) for d in dates))
+        p.string = " | ".join(meta)
         work_section.append(p)
 
         if desc:
@@ -158,6 +165,31 @@ def main():
 
         ul = ats.new_tag("ul")
         for li in extract_list_items(skills_section):
+            li_tag = ats.new_tag("li")
+            li_tag.string = li
+            ul.append(li_tag)
+        sec.append(ul)
+        body.append(sec)
+
+    # ----- HOME LAB -----
+    homelab_section = soup.select_one("#homelab")
+    if homelab_section:
+        sec = ats.new_tag("section")
+        h2 = ats.new_tag("h2")
+        h2.string = clean_text(homelab_section.h2.get_text())
+        sec.append(h2)
+
+        doc_link = homelab_section.select_one(".section-link a")
+        if doc_link:
+            p = ats.new_tag("p")
+            p.append(NavigableString("Documentation: "))
+            a_tag = ats.new_tag("a", href=doc_link['href'])
+            a_tag.string = doc_link['href']
+            p.append(a_tag)
+            sec.append(p)
+
+        ul = ats.new_tag("ul")
+        for li in extract_list_items(homelab_section):
             li_tag = ats.new_tag("li")
             li_tag.string = li
             ul.append(li_tag)
