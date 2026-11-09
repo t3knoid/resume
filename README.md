@@ -82,7 +82,8 @@ Example:
 ### Stylesheets
 
 - **Screen layout:** `assets/css/style.css`  
-- **Print/PDF layout:** `assets/css/print.css` (used by `htmtopdf.py`)
+- **Print layout:** `assets/css/print.css` (browser printing of the page; also used by `htmtopdf.py` when rendering `index.html` without `--pdf-source`)
+- **ATS PDF layout:** inline in `scripts/html_to_ats_resume.py` (`ATS_CSS`)
 
 ### Download link obfuscation
 
@@ -108,13 +109,13 @@ printf %s 'https://url/to/resume.pdf' | base64
 
 ## PDF Generation & Upload
 
-PDFs are generated from `index.html` using `htmtopdf.py` and uploaded to Azure Blob Storage.
+The downloadable PDF is the **ATS-friendly résumé**: `html_to_ats_resume.py` builds `resume_ats.html` from `index.html`, and `htmtopdf.py --pdf-source resume_ats.html` renders it to PDF and uploads it to Azure Blob Storage. No PDF of the styled page is produced. `htmtopdf.py` still updates `index.html` (last-updated date, download link).
 
 - **Renderer:** WeasyPrint (modern CSS → PDF)  
 - **Hosting:** Azure Blob Storage static website (`$web` container)
 - **Download behavior:** PDFs are uploaded with `Content-Disposition: attachment; filename="Frank_Refol_Resume.pdf"`, so browsers save the file (with a clean name) instead of opening it inline.
 - **robots.txt:** each upload also writes a `robots.txt` (`Disallow: /`) to the root of the static website so crawlers skip the PDFs.
-- **Contact details (PDF only):** email and phone are **not** in `index.html`. The script reads them from `RESUME_EMAIL` and `RESUME_PHONE` and adds them to an in-memory copy of the page that is rendered to PDF. `index.html` on disk never gets them. If either variable is missing, the script prints a warning and the PDF omits that field.
+- **Contact details (PDF only):** email and phone are **not** in `index.html`. Both scripts read them from `RESUME_EMAIL` and `RESUME_PHONE`: `html_to_ats_resume.py` writes them into `resume_ats.html` (git-ignored, never deployed), and `htmtopdf.py` without `--pdf-source` adds them to an in-memory copy of `index.html`. `index.html` on disk never gets them. If either variable is missing, the PDF omits that field.
 
 ### File names
 
@@ -128,7 +129,8 @@ PDFs are generated from `index.html` using `htmtopdf.py` and uploaded to Azure B
 | Option             | Description                                                      |
 | ------------------ | ---------------------------------------------------------------- |
 | `--no-upload`      | Skip Azure upload (local testing)                                |
-| `--html <path>`    | Use an alternate HTML input file (default: `index.html`)         |
+| `--html <path>`    | Page whose last-updated date and download link are updated (default: `index.html`) |
+| `--pdf-source <path>` | HTML to render as the PDF, as-is (e.g. `resume_ats.html`); default renders `--html` with contact details added |
 | `--out <file>`     | Output filename (default: see [File names](#file-names); token not applied) |
 | `--suffix <value>` | Add a filename suffix (e.g., `ats`)                              |
 
@@ -149,9 +151,12 @@ python -m venv $env:VENV
 & $env:VENV\Scripts\Activate.ps1
 pip install -r requirements.txt
 
-python scripts/htmtopdf.py --no-upload
+python scripts/html_to_ats_resume.py
+python scripts/htmtopdf.py --pdf-source resume_ats.html --no-upload
 ```
 
+- WeasyPrint needs the GTK runtime on Windows
+- `htmtopdf.py` updates `index.html` (last-updated date, download link); revert it if you don't want those changes committed
 - Confirm the timestamped PDF output  
 - Remove `--no-upload` to test Azure upload  
 
@@ -182,10 +187,11 @@ $env:AZURE_STORAGE_CONTAINER="$web"
 3. **Generate and upload**
 
 ```bash
-python3 scripts/htmtopdf.py
+python3 scripts/html_to_ats_resume.py
+python3 scripts/htmtopdf.py --pdf-source resume_ats.html
 ```
 
-- Produces timestamped and "latest" PDFs  
+- Produces timestamped and "latest" PDFs of the ATS résumé  
 - Updates the footer "last updated" date and the download link in `index.html`  
 - Uploads the PDFs and `robots.txt` to Azure Blob Storage  
 
@@ -200,7 +206,8 @@ python3 scripts/htmtopdf.py
 The automated workflow:
 
 - Runs on push to `main` or manual dispatch  
-- Generates both timestamped and “latest” PDFs  
+- Builds `resume_ats.html` from `index.html`  
+- Renders it to timestamped and “latest” PDFs (the download link points at “latest”)  
 - Uploads them, plus `robots.txt`, to Azure Blob Storage  
 - Commits the updated `index.html` (last-updated date, download link)  
 - Deploys the site to GitHub Pages  
@@ -215,8 +222,9 @@ Required secrets:
 Pipeline flow:
 
 ```
-index.html → htmtopdf.py → timestamped + latest PDFs → Azure Blob Storage
-                         → updated index.html → commit → GitHub Pages
+index.html → html_to_ats_resume.py → resume_ats.html
+resume_ats.html → htmtopdf.py --pdf-source → timestamped + latest ATS PDFs → Azure Blob Storage
+                                           → updated index.html → commit → GitHub Pages
 ```
 
 ---
@@ -312,20 +320,19 @@ npm exec --yes html-validate index.html
 
 ---
 
-## ATS‑Friendly Resume (Optional)
+## ATS‑Friendly Resume
 
-The main HTML résumé is already ATS‑friendly.  
-However, some systems prefer extremely plain formatting. For those cases, the repository includes an **optional ATS‑friendly HTML and PDF generator**.
+The downloadable PDF is built from a plain, ATS-friendly version of the résumé so applicant tracking systems parse it reliably.
 
 ### What the ATS generator does
 
-The script `scripts/html_to_ats_resume.py` can generate a simplified HTML version by:
+The script `scripts/html_to_ats_resume.py` generates a simplified HTML version by:
 
-- Extracting contact info, summary, work experience, skills, and education (email and phone come from `RESUME_EMAIL` / `RESUME_PHONE`, since they aren't in `index.html`)  
-- Converting tables and nested layout elements into plain headings, paragraphs, and lists  
-- Producing a minimal HTML file suitable for conversion into a plain PDF
+- Extracting contact info, summary, work experience (title, then company | location | dates, then official title), skills, home lab, and education (email and phone come from `RESUME_EMAIL` / `RESUME_PHONE`, since they aren't in `index.html`)  
+- Converting nested layout elements into plain headings, paragraphs, and lists in a single column  
+- Adding minimal typography only, with bullets drawn inline so text extraction keeps them beside their items
 
-This step is **optional** and not used by the live website. `resume_ats.html` contains your contact details, so it is git-ignored and excluded from the GitHub Pages deploy. Don't commit it.
+The workflow renders it to the PDF behind the site's download link; the web page itself still uses `index.html`. `resume_ats.html` contains your contact details, so it is git-ignored and excluded from the GitHub Pages deploy. Don't commit it.
 
 ### Manual usage
 
