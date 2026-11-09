@@ -140,7 +140,12 @@ def parse_args(argv=None):
         default='index.html', 
         help='HTML file to convert')
     parser.add_argument(
-        '--out', default=None, 
+        '--pdf-source',
+        default=None,
+        help='HTML file to render as the PDF, used as-is (e.g. resume_ats.html). '
+             'Default: render --html with contact details injected')
+    parser.add_argument(
+        '--out', default=None,
         help='Output PDF filename (optional)')
     parser.add_argument(
         '--suffix', 
@@ -199,17 +204,23 @@ def main(argv: Optional[list] = None) -> int:
         missing = [k for k, v in contact.items() if not v]
         if missing:
             print(f"Warning: RESUME_{'/RESUME_'.join(m.upper() for m in missing)} not set; PDF will omit it.")
-        pdf_html = str(inject_contact(soup, contact))
+        if args.pdf_source:
+            # A separately generated page (the ATS resume) already carries its contact details
+            pdf_path_source = args.pdf_source
+            pdf_html = read_html(pdf_path_source)
+        else:
+            pdf_path_source = html_file
+            pdf_html = str(inject_contact(soup, contact))
     except Exception as e:
         print(f'Error updating HTML: {e}')
         return 1
 
     try:
-        generate_pdf(html_file, resume_pdf_file, pdf_html)
+        generate_pdf(pdf_path_source, resume_pdf_file, pdf_html)
         print(f'Generated PDF: {resume_pdf_file}')
-        # If requested, also generate a "latest" PDF with the ats_latest suffix
+        # Also generate the "latest" PDF the download link points at
         if upload_latest and latest_pdf_file:
-            generate_pdf(html_file, latest_pdf_file, pdf_html)
+            generate_pdf(pdf_path_source, latest_pdf_file, pdf_html)
             print(f'Generated latest PDF: {latest_pdf_file}')
     except Exception as e:
         print(f'Error generating PDF: {e}')
