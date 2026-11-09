@@ -6,6 +6,20 @@ import re
 DEFAULT_INPUT = "index.html"
 DEFAULT_OUTPUT = "resume_ats.html"
 
+ATS_CSS = """
+@page { size: Letter; margin: 0.6in 0.7in; }
+body { font-family: Arial, Helvetica, sans-serif; font-size: 10.5pt; line-height: 1.3; color: #000; }
+h1 { font-size: 18pt; margin: 0 0 2pt; }
+h2 { font-size: 12pt; text-transform: uppercase; border-bottom: 1px solid #000; margin: 12pt 0 4pt; }
+h3 { font-size: 11pt; margin: 8pt 0 0; }
+p { margin: 0 0 2pt; }
+ul { margin: 2pt 0 4pt; padding-left: 16pt; list-style: none; }
+/* Inline bullet (not a list marker) so text extraction keeps it beside its item */
+li { margin-bottom: 2pt; text-indent: -9pt; }
+li::before { content: "\\2022\\00a0\\00a0"; }
+a { color: #000; text-decoration: none; }
+"""
+
 def clean_text(text):
     return re.sub(r"\s+", " ", text.strip())
 
@@ -44,20 +58,28 @@ def main():
 
     ats = BeautifulSoup("<!DOCTYPE html><html><head></head><body></body></html>", "html.parser")
 
+    name = soup.select_one(".name")
+    title_role = soup.select_one(".title")
+
     # ----- HEAD -----
     head = ats.head
     head.append(ats.new_tag("meta", charset="utf-8"))
     title = ats.new_tag("title")
-    title.string = "Francis Refol – IT Automation Engineer / DevOps"
+    # Document title comes from the page headline so it never goes stale
+    # (ASCII separator: the title becomes PDF metadata, where some readers mangle an en dash)
+    title.string = f"{clean_text(name.get_text())} | {clean_text(title_role.get_text())}"
     head.append(title)
+    head.append(ats.new_tag("meta", attrs={"name": "author", "content": clean_text(name.get_text())}))
+    # Minimal typography only: single column, no layout, so parsers read it in order
+    style = ats.new_tag("style")
+    style.string = ATS_CSS
+    head.append(style)
 
     # ----- BODY -----
     body = ats.body
 
     # ----- HEADER / CONTACT -----
     header = ats.new_tag("header")
-    name = soup.select_one(".name")
-    title_role = soup.select_one(".title")
     # Contact details aren't in the public index.html; take them from the environment.
     email = os.environ.get("RESUME_EMAIL", "").strip()
     phone = os.environ.get("RESUME_PHONE", "").strip()
@@ -114,6 +136,7 @@ def main():
         position = item.select_one(".resume-position")
         dates = item.select(".resume-date-worked")
         company = item.select_one(".resume-company")
+        location = item.select_one(".resume-company-location")
         desc = item.select_one(".resume-company-description")
         responsibilities = item.select_one(".resume-responsibilities")
 
@@ -124,21 +147,24 @@ def main():
         h3.string = clean_text(position.get_text())
         work_section.append(h3)
 
-        official = item.select_one(".resume-official-title")
-        if official:
-            o = ats.new_tag("p")
-            o.string = clean_text(official.get_text())
-            work_section.append(o)
-
+        # Title, then company/location/dates: the order ATS parsers expect
         p = ats.new_tag("p")
         meta = []
         if company:
             meta.append(clean_text(company.get_text()))
+        if location:
+            meta.append(clean_text(location.get_text()))
         if dates:
             # Start and end dates, e.g. "Jul 2022 – Aug 2024"
             meta.append(" – ".join(clean_text(d.get_text()) for d in dates))
         p.string = " | ".join(meta)
         work_section.append(p)
+
+        official = item.select_one(".resume-official-title")
+        if official:
+            o = ats.new_tag("p")
+            o.string = clean_text(official.get_text())
+            work_section.append(o)
 
         if desc:
             d = ats.new_tag("p")
@@ -204,14 +230,17 @@ def main():
         h2.string = "Education"
         sec.append(h2)
 
-        p = ats.new_tag("p")
-        p.string = clean_text(education_section.get_text())
-        sec.append(p)
+        # Only the entries, not the section's own "Education" heading
+        for entry in education_section.find_all("p"):
+            p = ats.new_tag("p")
+            p.string = clean_text(entry.get_text())
+            sec.append(p)
         body.append(sec)
 
     # ----- WRITE OUTPUT -----
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write(ats.prettify())
+        # Not prettify(): it pads text with whitespace that ends up in the PDF title metadata
+        f.write(str(ats))
 
     print(f"ATS-friendly resume generated: {OUTPUT_FILE}")
 
