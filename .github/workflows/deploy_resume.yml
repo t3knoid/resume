@@ -44,8 +44,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Step 4: Generate PDF of standard resume and upload to Azure Storage
-      - name: Generate and Upload PDF
+      # Step 4: Build the ATS-friendly resume HTML (contact details from secrets; never deployed)
+      - name: Generate ATS Resume HTML
+        env:
+          RESUME_EMAIL: ${{ secrets.RESUME_EMAIL }}
+          RESUME_PHONE: ${{ secrets.RESUME_PHONE }}
+        run: python3 scripts/html_to_ats_resume.py -i index.html -o resume_ats.html
+
+      # Step 5: Render the ATS resume to PDF, upload it to Azure Storage, and point
+      # index.html's download link at it (no PDF of the styled page is produced)
+      - name: Generate and Upload ATS PDF
         id: pdfgen
         env:
           AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
@@ -53,9 +61,9 @@ jobs:
           RESUME_PDF_TOKEN: ${{ secrets.RESUME_PDF_TOKEN }}
           RESUME_EMAIL: ${{ secrets.RESUME_EMAIL }}
           RESUME_PHONE: ${{ secrets.RESUME_PHONE }}
-        run: python3 scripts/htmtopdf.py
+        run: python3 scripts/htmtopdf.py --pdf-source resume_ats.html
 
-      # Step 5: Commit and push index.html changes (last-updated date, download link)
+      # Step 6: Commit and push index.html changes (last-updated date, download link)
       - name: Commit and Push index.html changes
         run: |
           git config user.name "github-actions[bot]"
@@ -70,7 +78,7 @@ jobs:
             git push
           fi
 
-      # Step 6: Prepare and deploy GitHub Pages artifact
+      # Step 7: Prepare and deploy GitHub Pages artifact
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
